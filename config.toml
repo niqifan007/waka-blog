@@ -3,7 +3,7 @@
 # Modifying this file may result in merge conflict
 # =====================================================================================
 title = "waka's blog"
-baseURL = "http://example.org/"
+baseURL = "http://blog.579878700.xyz/"
 # 设置默认的语言 ["en", "zh-cn", "fr", "pl", ...]
 defaultContentLanguage = "zh-cn"
 # 网站语言, 仅在这里 CN 大写 ["en", "zh-CN", "fr", "pl", ...]
