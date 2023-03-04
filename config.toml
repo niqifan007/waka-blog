@@ -151,7 +151,7 @@ theme = "FixIt"
     # FixIt 0.2.0 | NEW Header title config
     [params.header.title]
       # URL of the LOGO
-      logo = "/fixit.min.svg"
+      logo = "狐狸.svg"
       # title name
       name = "waka's blog"
       # you can add extra information before the name (HTML format is supported), such as icons
@@ -159,7 +159,7 @@ theme = "FixIt"
       # you can add extra information after the name (HTML format is supported), such as icons
       post = ""
       # FixIt 0.2.5 | NEW whether to use typeit animation for title name
-      typeit = true
+      typeit = false
     # FixIt 0.2.12 | NEW Header subtitle config
     [params.header.subtitle]
       # subtitle name
