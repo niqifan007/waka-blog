@@ -1,0 +1,134 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>区块链 - 分类 - waka&#39;s blog</title>
+    <link>http://blog.579878700.xyz/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/</link>
+    <description>区块链 - 分类 - waka&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 05 Mar 2023 14:09:53 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="self" type="application/rss+xml" /><item>
+  <title>默克尔树(Merkle tree)的Go实现</title>
+  <link>http://blog.579878700.xyz/posts/merkle_tree_go/</link>
+  <pubDate>Sun, 05 Mar 2023 14:09:53 &#43;0800</pubDate>
+  <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
+  <guid>http://blog.579878700.xyz/posts/merkle_tree_go/</guid>
+  <description><![CDATA[<h3 id="merkle-trees">Merkle trees</h3>
+<hr>
+<p>Merkle树是区块链技术的基本组成部分。它是由不同数据块的散列组成的数学数据结构，用作块中所有交易的摘要。</p>
+<p>它还允许对大量数据中的内容进行有效和安全的验证。此结构有助于验证数据的一致性和内容。比特币和以太坊都使用Merkle树结构。Merkle树也被称为哈希树。</p>
+<p>从根本上说，Merkle树是数据结构树，其中每个叶节点都用数据块的哈希标记，非叶节点用加密标记 其子节点标签的哈希值。叶节点是树中的最低节点。</p>
+<p></p>
+<h3 id="原理">原理</h3>
+<p>区块链中每个区块都会有一个 Merkle 树，它从叶子节点（树的底部）开始，一个叶子节点就是一个交易哈希。叶子节点的数量必须是双数，但是并非每个块都包含了双数的交易。如果一个块里面的交易数为单数，那么就将最后一个叶子节点（也就是 Merkle 树的最后一个交易，不是区块的最后一笔交易）复制一份凑成双数。</p>
+<p>从下往上，两两成对，连接两个节点哈希，将组合哈希作为新的哈希。新的哈希就成为新的树节点。重复该过程，直到仅有一个节点，也就是树根。根哈希然后就会当作是整个块交易的唯一标示，将它保存到区块头，然后用于工作量证明。</p>
+<hr>
+<h3 id="代码实现">代码实现</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//默克尔树节点结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Index</span>    <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Value</span>    <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">RootTree</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MHTree</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//默克尔树结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MHTree</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Length</span>   <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Nodes</span>    []<span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rootHash</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//获得默克尔树根节点哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MHTree</span>) <span style="color:#a6e22e">GetRootHash</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//不管是否存储，都重新计算哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">rootHash</span> =   <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">getNodeHash</span>()                            
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">rootHash</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算默克尔树中某个节点的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">getNodeHash</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//叶子节点，则直接计算该节点Value的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Value</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Value</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//非叶子节点，则递归计算哈希值,其为2个子节点哈希值的哈希值123123123123
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">RootTree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Index</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>].<span style="color:#a6e22e">getNodeHash</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">RootTree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Index</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">getNodeHash</span>()
+</span></span><span style="display:flex;"><span>        )                                                         
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算数据的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">data</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//从结构化文件创建默克尔树
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">MHTree</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tree</span> <span style="color:#a6e22e">MHTree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//打开文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//获取读取器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//读取首行，获得叶子节点数目（要求叶子节点数目为2的整数次幂
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dataCountStr</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">ReadLine</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dataCount</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(string(<span style="color:#a6e22e">dataCountStr</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//判断幂次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">level</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; ; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                                          
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">dataCount</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">level</span> = <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建默克尔树
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//给非叶子节点赋值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">level</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                               
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">RootTree</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//读取文件数据，给叶子节点赋值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#a6e22e">level</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                  
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">str</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">ReadLine</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">RootTree</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Value</span> = string(<span style="color:#a6e22e">str</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;请输入原始数据文件名称&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mhTree1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;请输入比对数据文件名称&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mhTree2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mhTree1</span>.<span style="color:#a6e22e">GetRootHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mhTree2</span>.<span style="color:#a6e22e">GetRootHash</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hash1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">hash2</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;用户没有改变数据&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;用户改变了数据&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>]]></description>
+</item>
+</channel>
+</rss>
