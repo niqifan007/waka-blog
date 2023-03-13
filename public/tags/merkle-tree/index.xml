@@ -20,115 +20,229 @@
 <p>从下往上，两两成对，连接两个节点哈希，将组合哈希作为新的哈希。新的哈希就成为新的树节点。重复该过程，直到仅有一个节点，也就是树根。根哈希然后就会当作是整个块交易的唯一标示，将它保存到区块头，然后用于工作量证明。</p>
 <hr>
 <h3 id="代码实现">代码实现</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">108
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#c678dd">package</span> <span style="color:#e06c75">main</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;bufio&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;crypto/sha256&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;strconv&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//默克尔树节点结构体
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Index</span>    <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Value</span>    <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">RootTree</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MHTree</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//默克尔树节点结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">type</span> <span style="color:#e06c75">Node</span> <span style="color:#c678dd">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Index</span>    <span style="color:#e5c07b">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Value</span>    <span style="color:#e5c07b">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">RootTree</span> <span style="color:#56b6c2">*</span><span style="color:#e06c75">MHTree</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//默克尔树结构体
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MHTree</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Length</span>   <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Nodes</span>    []<span style="color:#a6e22e">Node</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rootHash</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//默克尔树结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">type</span> <span style="color:#e06c75">MHTree</span> <span style="color:#c678dd">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Length</span>   <span style="color:#e5c07b">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Nodes</span>    []<span style="color:#e06c75">Node</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">rootHash</span> <span style="color:#e5c07b">string</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//获得默克尔树根节点哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MHTree</span>) <span style="color:#a6e22e">GetRootHash</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//不管是否存储，都重新计算哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">rootHash</span> =   <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">getNodeHash</span>()                            
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">rootHash</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//获得默克尔树根节点哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> (<span style="color:#e06c75">t</span> <span style="color:#56b6c2">*</span><span style="color:#e06c75">MHTree</span>) <span style="color:#61afef;font-weight:bold">GetRootHash</span>() <span style="color:#e5c07b">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//不管是否存储，都重新计算哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">t</span>.<span style="color:#e06c75">rootHash</span> =   <span style="color:#e06c75">t</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#d19a66">1</span>].<span style="color:#61afef;font-weight:bold">getNodeHash</span>()                            
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">return</span> <span style="color:#e06c75">t</span>.<span style="color:#e06c75">rootHash</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算默克尔树中某个节点的哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">getNodeHash</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//叶子节点，则直接计算该节点Value的哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Value</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Value</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//计算默克尔树中某个节点的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> (<span style="color:#e06c75">n</span> <span style="color:#56b6c2">*</span><span style="color:#e06c75">Node</span>) <span style="color:#61afef;font-weight:bold">getNodeHash</span>() <span style="color:#e5c07b">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//叶子节点，则直接计算该节点Value的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#c678dd">if</span> <span style="color:#e06c75">n</span>.<span style="color:#e06c75">Value</span> <span style="color:#56b6c2">!=</span> <span style="color:#98c379">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#c678dd">return</span> <span style="color:#61afef;font-weight:bold">calDataHash</span>(<span style="color:#e06c75">n</span>.<span style="color:#e06c75">Value</span>)
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//非叶子节点，则递归计算哈希值,其为2个子节点哈希值的哈希值123123123123
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">RootTree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Index</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>].<span style="color:#a6e22e">getNodeHash</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">RootTree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Index</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">getNodeHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//非叶子节点，则递归计算哈希值,其为2个子节点哈希值的哈希值123123123123
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>    <span style="color:#c678dd">return</span> <span style="color:#61afef;font-weight:bold">calDataHash</span>(<span style="color:#e06c75">n</span>.<span style="color:#e06c75">RootTree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">n</span>.<span style="color:#e06c75">Index</span><span style="color:#56b6c2">*</span><span style="color:#d19a66">2</span>].<span style="color:#61afef;font-weight:bold">getNodeHash</span>() <span style="color:#56b6c2">+</span> <span style="color:#e06c75">n</span>.<span style="color:#e06c75">RootTree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">n</span>.<span style="color:#e06c75">Index</span><span style="color:#56b6c2">*</span><span style="color:#d19a66">2</span><span style="color:#56b6c2">+</span><span style="color:#d19a66">1</span>].<span style="color:#61afef;font-weight:bold">getNodeHash</span>()
 </span></span><span style="display:flex;"><span>        )                                                         
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算数据的哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">data</span>))
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//计算数据的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> <span style="color:#61afef;font-weight:bold">calDataHash</span>(<span style="color:#e06c75">data</span> <span style="color:#e5c07b">string</span>) <span style="color:#e5c07b">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">sha256</span>.<span style="color:#61afef;font-weight:bold">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash</span>.<span style="color:#61afef;font-weight:bold">Write</span>([]<span style="color:#e5c07b">byte</span>(<span style="color:#e06c75">data</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">return</span> <span style="color:#e5c07b">string</span>(<span style="color:#e06c75">hash</span>.<span style="color:#61afef;font-weight:bold">Sum</span>(<span style="color:#e5c07b">nil</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//从结构化文件创建默克尔树
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">MHTree</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tree</span> <span style="color:#a6e22e">MHTree</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//打开文件
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//从结构化文件创建默克尔树
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> <span style="color:#61afef;font-weight:bold">CreateMHTree</span>(<span style="color:#e06c75">fileName</span> <span style="color:#e5c07b">string</span>) <span style="color:#e06c75">MHTree</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">var</span> <span style="color:#e06c75">tree</span> <span style="color:#e06c75">MHTree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//打开文件
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">file</span>, <span style="color:#e06c75">err</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">os</span>.<span style="color:#61afef;font-weight:bold">Open</span>(<span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">if</span> <span style="color:#e06c75">err</span> <span style="color:#56b6c2">!=</span> <span style="color:#e5c07b">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#e5c07b">panic</span>(<span style="color:#e06c75">err</span>)
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//获取读取器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//读取首行，获得叶子节点数目（要求叶子节点数目为2的整数次幂
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dataCountStr</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">ReadLine</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dataCount</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(string(<span style="color:#a6e22e">dataCountStr</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">defer</span> <span style="color:#e06c75">file</span>.<span style="color:#61afef;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//获取读取器
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">buf</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">bufio</span>.<span style="color:#61afef;font-weight:bold">NewReader</span>(<span style="color:#e06c75">file</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//读取首行，获得叶子节点数目（要求叶子节点数目为2的整数次幂
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">dataCountStr</span>, <span style="color:#e06c75">_</span>, <span style="color:#e06c75">_</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">buf</span>.<span style="color:#61afef;font-weight:bold">ReadLine</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">dataCount</span>, <span style="color:#e06c75">_</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">strconv</span>.<span style="color:#61afef;font-weight:bold">Atoi</span>(<span style="color:#e5c07b">string</span>(<span style="color:#e06c75">dataCountStr</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//判断幂次
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">level</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; ; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                                          
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">dataCount</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">level</span> = <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//判断幂次
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">level</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">for</span> <span style="color:#e06c75">i</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">1</span>; ; <span style="color:#e06c75">i</span><span style="color:#56b6c2">++</span> {                                          
+</span></span><span style="display:flex;"><span>		<span style="color:#c678dd">if</span> <span style="color:#d19a66">2</span><span style="color:#56b6c2">&lt;&lt;</span><span style="color:#e06c75">i</span> <span style="color:#56b6c2">==</span> <span style="color:#e06c75">dataCount</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#e06c75">level</span> = <span style="color:#e06c75">i</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#c678dd">break</span>
 </span></span><span style="display:flex;"><span>		}
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建默克尔树
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//给非叶子节点赋值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">level</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                               
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">RootTree</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//创建默克尔树
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//给非叶子节点赋值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#c678dd">for</span> <span style="color:#e06c75">i</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">1</span>; <span style="color:#e06c75">i</span> <span style="color:#56b6c2">&lt;=</span> <span style="color:#d19a66">2</span><span style="color:#56b6c2">&lt;&lt;</span><span style="color:#e06c75">level</span><span style="color:#56b6c2">-</span><span style="color:#d19a66">1</span>; <span style="color:#e06c75">i</span><span style="color:#56b6c2">++</span> {                               
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">Index</span> = <span style="color:#e06c75">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">RootTree</span> = <span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">tree</span>
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//读取文件数据，给叶子节点赋值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#a6e22e">level</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                  
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">str</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">ReadLine</span>()
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">RootTree</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tree</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Value</span> = string(<span style="color:#a6e22e">str</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//读取文件数据，给叶子节点赋值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#c678dd">for</span> <span style="color:#e06c75">i</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">2</span> <span style="color:#56b6c2">&lt;&lt;</span> <span style="color:#e06c75">level</span>; <span style="color:#e06c75">i</span> &lt; <span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Length</span>; <span style="color:#e06c75">i</span><span style="color:#56b6c2">++</span> {                  
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">str</span>, <span style="color:#e06c75">_</span>, <span style="color:#e06c75">_</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">buf</span>.<span style="color:#61afef;font-weight:bold">ReadLine</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">Index</span> = <span style="color:#e06c75">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">RootTree</span> = <span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">tree</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">Value</span> = <span style="color:#e5c07b">string</span>(<span style="color:#e06c75">str</span>)
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">return</span> <span style="color:#e06c75">tree</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">func</span> <span style="color:#61afef;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">var</span> <span style="color:#e06c75">fileName</span> <span style="color:#e5c07b">string</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;请输入原始数据文件名称&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mhTree1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;请输入比对数据文件名称&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mhTree2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;请输入原始数据文件名称&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Scanln</span>(<span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">mhTree1</span> <span style="color:#56b6c2">:=</span> <span style="color:#61afef;font-weight:bold">CreateMHTree</span>(<span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;请输入比对数据文件名称&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Scanln</span>(<span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">mhTree2</span> <span style="color:#56b6c2">:=</span> <span style="color:#61afef;font-weight:bold">CreateMHTree</span>(<span style="color:#e06c75">fileName</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mhTree1</span>.<span style="color:#a6e22e">GetRootHash</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mhTree2</span>.<span style="color:#a6e22e">GetRootHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash1</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">mhTree1</span>.<span style="color:#61afef;font-weight:bold">GetRootHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash2</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">mhTree2</span>.<span style="color:#61afef;font-weight:bold">GetRootHash</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hash1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">hash2</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;用户没有改变数据&#34;</span>)
-</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;用户改变了数据&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">if</span> <span style="color:#e06c75">hash1</span> <span style="color:#56b6c2">==</span> <span style="color:#e06c75">hash2</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;用户没有改变数据&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#c678dd">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;用户改变了数据&#34;</span>)
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>]]></description>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
 </item>
 </channel>
 </rss>

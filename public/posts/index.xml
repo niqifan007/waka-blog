@@ -3,7 +3,398 @@
     <title>所有文章 - waka&#39;s blog</title>
     <link>http://blog.579878700.xyz/posts/</link>
     <description>所有文章 | waka&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 05 Mar 2023 23:27:33 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/posts/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 13 Mar 2023 22:41:46 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>使用springboot整合OpenAI的Chatgpt api和Whisper api</title>
+  <link>http://blog.579878700.xyz/posts/springboot-openai/</link>
+  <pubDate>Mon, 13 Mar 2023 22:41:46 &#43;0800</pubDate>
+  <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
+  <guid>http://blog.579878700.xyz/posts/springboot-openai/</guid>
+  <description><![CDATA[<h1 id="springbootchatgptwhisper-api">Springboot+Chatgpt+Whisper api</h1>
+<p></p>
+<p>本文通过springboot将两个OpenAI API的其中两个，ChatGPT和Whisper API集成在一起，方便后续的开发。</p>
+<h2 id="openai-api">OpenAI API</h2>
+<p>OpenAI是人工智能和机器学习工具及API的领先提供商之一。它训练了尖端的语言模型，擅长理解和生成文本。OpenAI API提供对这些模型的访问，并可用于解决几乎涉及处理语言的任何任务。它可以执行包括但不限于以下任务：</p>
+<ul>
+<li>
+<p>Content generation 内容生成</p>
+</li>
+<li>
+<p>Summarization 总结</p>
+</li>
+<li>
+<p>Classification, categorization, and sentiment analysis<br>
+分类、归类和情感分析</p>
+</li>
+<li>
+<p>Data extraction 数据提取</p>
+</li>
+<li>
+<p>Translation 翻译</p>
+</li>
+<li>
+<p>Transcription 转录</p>
+</li>
+<li>
+<p>Image generation 图像生成</p>
+</li>
+</ul>
+<p>我们可以通过任何语言发出HTTP请求与API进行交互。在本篇文章中，我们将使用Java构建一个Spring Boot微服务来集成Chatgpt API和Whisper API语音转文字功能。</p>
+<h2 id="集成chatgpt-whisper-spring-boot">集成chatgpt-whisper-spring-boot</h2>
+<ol>
+<li>
+<p>首先我们打开IDEA新建一个springboot项目</p>
+<p></p>
+</li>
+<li>
+<p>然后往其中的pom.xml文件添加依赖</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#e06c75">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#e06c75">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#e06c75">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#e06c75">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>spring-cloud-starter-openfeign<span style="color:#e06c75">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;version&gt;</span>4.0.1<span style="color:#e06c75">&lt;/version&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.projectlombok<span style="color:#e06c75">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>lombok<span style="color:#e06c75">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;optional&gt;</span>true<span style="color:#e06c75">&lt;/optional&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;/dependency&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;dependency&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#e06c75">&lt;/groupId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>spring-boot-configuration-processor<span style="color:#e06c75">&lt;/artifactId&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;optional&gt;</span>true<span style="color:#e06c75">&lt;/optional&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e06c75">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="spring-cloud-openfeign">Spring Cloud OpenFeign</h2>
+<p>对于第三方REST API集成，有许多可以用的工具，这里我们选择Spring Cloud OpenFeign，因为这个对于Spring Boot 3支持方面比较好。</p>
+<p>接下来我们打开 <code>application.yml</code>，往其中添加下面的内容：</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#e06c75">openai-service</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">api-key</span>: xxxxxxxxxx
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">gpt-model</span>: gpt-3.5-turbo
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">audio-model</span>: whisper-1
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">http-client</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">read-timeout</span>: <span style="color:#d19a66">60000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">connect-timeout</span>: <span style="color:#d19a66">60000</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">urls</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">base-url</span>: https://chat.579878700.xyz/v1
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">chat-url</span>: /chat/completions
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">create-transcription-url</span>: /audio/transcriptions
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
+<p><code>gpt-model</code> ： <code>gpt-3.5-turbo</code> ，功能最强大的GPT-3.5模型，针对聊天进行了优化，成本仅为 <code>text-davinci-003</code> 的1/10，它可以执行任何语言任务，质量更好，输出更长，指令一致。</p>
+<p><code>audio-model</code> ： <code>whisper-1</code> ，通用语音识别模型。它是在一个大型的多样化音频数据集上进行训练的，也是一个多任务模型，可以执行多语言语音识别以及语音翻译和来自世界各地大约100种不同语言的音频文件的语言识别。</p>
+<p><code> read-time</code>和<code> connect-time</code>可以根据实际需求更改，这里我使用中文来回答，因此我设置的大一些，避免回答返回时间太长导致超时问题。</p>
+<p><code> base-url</code>这里我填写的是我使用CF进行反代的地址，因为一些原因，openai api在中国不能直接访问，所以使用这个方法。如果不需要，请改成<code> https://api.openai.com/v1</code></p>
+<p><code>urls</code> ：根据OpenAI API文档，所有API URL均以 <code>[https://api.openai.com/v1](https://api.openai.com/v1)</code> 开头。我们将其定义为 <code>base-url</code> 。对于聊天功能， <code>chat-url</code> 被定义为 <code>/chat/completions</code> 。对于音频转录， <code>create-transcription-url</code> 被定义为 <code>/audio/transcriptions</code> 。</p>
+<p>我们使用 <code>/chat/completions</code> 继续使用 <code>gpt-3.5-turbo</code> 模型。</p>
+<h2 id="feign-client">Feign Client</h2>
+<p>现在配置已经完成，让我们继续编写声明式Feign客户端，我们需要两个方法： <code>chat</code> 和 <code>createTranscription</code> ，调用它们各自的OpenAI API端点URL。你可以随意命名这些方法，为了简单起见，让我们继续使用 <code>chat</code> 和 <code>createTranscription</code> 。</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@FeignClient</span><span style="color:#56b6c2">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">name</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;openai-service&#34;</span><span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">url</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;${openai-service.urls.base-url}&#34;</span><span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">configuration</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">OpenAIClientConfig</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">class</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">interface</span> <span style="color:#e5c07b">OpenAIClient</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;${openai-service.urls.chat-url}&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">headers</span> <span style="color:#56b6c2">=</span> <span style="color:#56b6c2">{</span><span style="color:#98c379">&#34;Content-Type=application/json&#34;</span><span style="color:#56b6c2">})</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">ChatGPTResponse</span> <span style="color:#61afef;font-weight:bold">chat</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@RequestBody</span> <span style="color:#e06c75">ChatGPTRequest</span> <span style="color:#e06c75">chatGPTRequest</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;${openai-service.urls.create-transcription-url}&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">headers</span> <span style="color:#56b6c2">=</span> <span style="color:#56b6c2">{</span><span style="color:#98c379">&#34;Content-Type=multipart/form-data&#34;</span><span style="color:#56b6c2">})</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">WhisperTranscriptionResponse</span> <span style="color:#61afef;font-weight:bold">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@ModelAttribute</span> <span style="color:#e06c75">WhisperTranscriptionRequest</span> <span style="color:#e06c75">whisperTranscriptionRequest</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="models">Models</h2>
+<p>通过严格遵循API文档，我们先定义请求/响应类。请参见下面使用 <code>gpt-3.5-turbo</code> 模型的示例请求和响应类。注意，使用 <code>text-davinci-003</code> 完成的请求/响应略有不同，有关详细信息，请参阅API文档。</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@Builder</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@AllArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@NoArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">ChatGPTRequest</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">model</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">List</span><span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">Message</span><span style="color:#56b6c2">&gt;</span> <span style="color:#e06c75">messages</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">ChatGPTResponse</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">id</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">object</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">model</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">LocalDate</span> <span style="color:#e06c75">created</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">List</span><span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">Choice</span><span style="color:#56b6c2">&gt;</span> <span style="color:#e06c75">choices</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">Usage</span> <span style="color:#e06c75">usage</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 Whisper 模型的音频转录请求/响应示例：</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@Builder</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@AllArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@NoArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">TranscriptionRequest</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">MultipartFile</span> <span style="color:#e06c75">file</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">WhisperTranscriptionResponse</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">text</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="service">Service</h2>
+<p>下面是服务层类 <code>OpenAIClientService</code> ，构造模型并调用Feignclient以触发对OpenAI API的调用。</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">OpenAIClientService</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#e06c75">OpenAIClient</span> <span style="color:#e06c75">openAIClient</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#e06c75">OpenAIClientConfig</span> <span style="color:#e06c75">openAIClientConfig</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#c678dd">static</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">ROLE_USER</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;user&#34;</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">ChatGPTResponse</span> <span style="color:#61afef;font-weight:bold">chat</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">ChatRequest</span> <span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">Message</span> <span style="color:#e06c75">message</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">Message</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">builder</span><span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">role</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">ROLE_USER</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">content</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getQuestion</span><span style="color:#56b6c2">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">build</span><span style="color:#56b6c2">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">ChatGPTRequest</span> <span style="color:#e06c75">chatGPTRequest</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">ChatGPTRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">builder</span><span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">openAIClientConfig</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getModel</span><span style="color:#56b6c2">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">messages</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">Collections</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">singletonList</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">message</span><span style="color:#56b6c2">))</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">build</span><span style="color:#56b6c2">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClient</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">chat</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">chatGPTRequest</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">WhisperTranscriptionResponse</span> <span style="color:#61afef;font-weight:bold">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">TranscriptionRequest</span> <span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">WhisperTranscriptionRequest</span> <span style="color:#e06c75">whisperTranscriptionRequest</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">WhisperTranscriptionRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">builder</span><span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">openAIClientConfig</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getAudioModel</span><span style="color:#56b6c2">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">file</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getFile</span><span style="color:#56b6c2">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">build</span><span style="color:#56b6c2">();</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClient</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">whisperTranscriptionRequest</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，除了必需参数之外，我们还可以在请求正文中传递多个可选参数来指示 OpenAI API。例如，对于<code>/chat/completions</code>，我们可以传入<code>temperature</code>参数，它告诉 OpenAI API 使用什么采样温度，介于 0 和 2 之间。较高的值将使输出更具随机性和风险性，而较低的值会使它更集中和确定性。<code>temperature</code>如果我们不指定，默认值为 1。请参阅<a href="https://platform.openai.com/docs/api-reference"target="_blank" rel="external nofollow noopener noreferrer">OpenAI API 文档，<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>了解我们可以在请求正文中传递的所有可能的参数。</p>
+<h2 id="rest-controller-rest">REST Controller REST</h2>
+<p>最后，让我们看看REST Controller层的 <code>OpenAIClientController</code> ，里面的两个客户端：</p>
+<ul>
+<li>
+<p><code>chat</code> （ <code>/api/v1/chat</code> ）：POST调用，使用JSON格式的消息，接受一个问题，并输出响应内容。</p>
+</li>
+<li>
+<p><code>createTranscription</code> （ <code>/api/v1/transcription</code> ）：POST调用，使用multipart/form-data，因为我们要上传音频文件，如 <code>m4a</code>和<code> mp3</code>等音频文件 ，API将把音频文件转录为文本。</p>
+</li>
+</ul>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@RestController</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@RequiredArgsConstructor</span>
+</span></span><span style="display:flex;"><span><span style="color:#61afef">@RequestMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;/api/v1&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">OpenAIClientController</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#e06c75">OpenAIClientService</span> <span style="color:#e06c75">openAIClientService</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;/chat&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">consumes</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">MediaType</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">APPLICATION_JSON_VALUE</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">ChatGPTResponse</span> <span style="color:#61afef;font-weight:bold">chat</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@RequestBody</span> <span style="color:#e06c75">ChatRequest</span> <span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClientService</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">chat</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;/transcription&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">consumes</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">MediaType</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">MULTIPART_FORM_DATA_VALUE</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">WhisperTranscriptionResponse</span> <span style="color:#61afef;font-weight:bold">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@ModelAttribute</span> <span style="color:#e06c75">TranscriptionRequest</span> <span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">){</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClientService</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="authentication-认证">Authentication 认证</h2>
+<p>OpenAI API调用需要传入一个带有API密钥的请求头“ <code>Authorization</code> “。让我们声明一个 <code>RequestInterceptor </code>bean来处理它，参见 <code>OpenAIClientConfig </code>类的示例代码片段：</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Bean</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">RequestInterceptor</span> <span style="color:#61afef;font-weight:bold">apiKeyInterceptor</span><span style="color:#56b6c2">()</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">request</span> <span style="color:#56b6c2">-&gt;</span> <span style="color:#e06c75">request</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">header</span><span style="color:#56b6c2">(</span><span style="color:#98c379">&#34;Authorization&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#98c379">&#34;Bearer &#34;</span> <span style="color:#56b6c2">+</span> <span style="color:#e06c75">apiKey</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最后运行项目">最后运行项目</h2>
+<p>用Postman测试一下</p>
+<p>下面是 <code>/chat</code> 客户端的示例请求/响应截图：</p>
+<p></p>
+<p>下面是 <code>/transcription</code> 的请求/响应：</p>
+<p></p>
+<p>感觉对中文的识别准确度还是可以的。</p>
+<p>使用Whisper模型的音频转录或翻译，文件上传目前限制为25 MB，并支持以下输入文件类型：<code>mp3</code>, <code>mp4</code>, <code>mpeg</code>, <code>mpga</code>, <code>m4a</code>, <code>wav</code>, and <code>webm</code>.</p>
+<p>Whisper型号的定价目前设定为0.006美元/分钟。</p>
+<h2 id="使用whisper-api进行音频翻译">使用Whisper API进行音频翻译</h2>
+<p>除了音频转录，Whisper API还提供音频翻译端点 <code>/audio/translations</code> 。我也测试了这个特性。然而，我发现，尽管它说可以把音频翻译成英语，但我录了一个中文短语，并在应用程序中调用了 <code>/audio/translations</code> api，结果发现回应仍然是中文。我也用日语测试了这个api，它完整的翻译成了英语。这应该是一个bug。</p>
+<h2 id="总结">总结</h2>
+<p>与任何第三方REST API一样，将OpenAI API集成到Springboot中非常简单。</p>
+<p>因此使用api开发自己的人工智能程序会变的非常便捷。</p>]]></description>
+</item>
+<item>
   <title>《Self-Sovereign Identity》(《身份自主权》中英文书籍)</title>
   <link>http://blog.579878700.xyz/posts/ssi_book/</link>
   <pubDate>Sun, 05 Mar 2023 23:27:33 &#43;0800</pubDate>
@@ -47,115 +438,229 @@ SSI软件的架构<br>
 <p>从下往上，两两成对，连接两个节点哈希，将组合哈希作为新的哈希。新的哈希就成为新的树节点。重复该过程，直到仅有一个节点，也就是树根。根哈希然后就会当作是整个块交易的唯一标示，将它保存到区块头，然后用于工作量证明。</p>
 <hr>
 <h3 id="代码实现">代码实现</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">108
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#c678dd">package</span> <span style="color:#e06c75">main</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;bufio&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;os&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;crypto/sha256&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#98c379">&#34;strconv&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//默克尔树节点结构体
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Index</span>    <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Value</span>    <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">RootTree</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MHTree</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//默克尔树节点结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">type</span> <span style="color:#e06c75">Node</span> <span style="color:#c678dd">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Index</span>    <span style="color:#e5c07b">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Value</span>    <span style="color:#e5c07b">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">RootTree</span> <span style="color:#56b6c2">*</span><span style="color:#e06c75">MHTree</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//默克尔树结构体
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MHTree</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Length</span>   <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Nodes</span>    []<span style="color:#a6e22e">Node</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rootHash</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//默克尔树结构体
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">type</span> <span style="color:#e06c75">MHTree</span> <span style="color:#c678dd">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Length</span>   <span style="color:#e5c07b">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">Nodes</span>    []<span style="color:#e06c75">Node</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">rootHash</span> <span style="color:#e5c07b">string</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//获得默克尔树根节点哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MHTree</span>) <span style="color:#a6e22e">GetRootHash</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//不管是否存储，都重新计算哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">rootHash</span> =   <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">getNodeHash</span>()                            
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">rootHash</span>
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//获得默克尔树根节点哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> (<span style="color:#e06c75">t</span> <span style="color:#56b6c2">*</span><span style="color:#e06c75">MHTree</span>) <span style="color:#61afef;font-weight:bold">GetRootHash</span>() <span style="color:#e5c07b">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//不管是否存储，都重新计算哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">t</span>.<span style="color:#e06c75">rootHash</span> =   <span style="color:#e06c75">t</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#d19a66">1</span>].<span style="color:#61afef;font-weight:bold">getNodeHash</span>()                            
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">return</span> <span style="color:#e06c75">t</span>.<span style="color:#e06c75">rootHash</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算默克尔树中某个节点的哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">getNodeHash</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//叶子节点，则直接计算该节点Value的哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Value</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Value</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//计算默克尔树中某个节点的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> (<span style="color:#e06c75">n</span> <span style="color:#56b6c2">*</span><span style="color:#e06c75">Node</span>) <span style="color:#61afef;font-weight:bold">getNodeHash</span>() <span style="color:#e5c07b">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//叶子节点，则直接计算该节点Value的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#c678dd">if</span> <span style="color:#e06c75">n</span>.<span style="color:#e06c75">Value</span> <span style="color:#56b6c2">!=</span> <span style="color:#98c379">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#c678dd">return</span> <span style="color:#61afef;font-weight:bold">calDataHash</span>(<span style="color:#e06c75">n</span>.<span style="color:#e06c75">Value</span>)
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//非叶子节点，则递归计算哈希值,其为2个子节点哈希值的哈希值123123123123
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">RootTree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Index</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>].<span style="color:#a6e22e">getNodeHash</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">RootTree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">Index</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">getNodeHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//非叶子节点，则递归计算哈希值,其为2个子节点哈希值的哈希值123123123123
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>    <span style="color:#c678dd">return</span> <span style="color:#61afef;font-weight:bold">calDataHash</span>(<span style="color:#e06c75">n</span>.<span style="color:#e06c75">RootTree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">n</span>.<span style="color:#e06c75">Index</span><span style="color:#56b6c2">*</span><span style="color:#d19a66">2</span>].<span style="color:#61afef;font-weight:bold">getNodeHash</span>() <span style="color:#56b6c2">+</span> <span style="color:#e06c75">n</span>.<span style="color:#e06c75">RootTree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">n</span>.<span style="color:#e06c75">Index</span><span style="color:#56b6c2">*</span><span style="color:#d19a66">2</span><span style="color:#56b6c2">+</span><span style="color:#d19a66">1</span>].<span style="color:#61afef;font-weight:bold">getNodeHash</span>()
 </span></span><span style="display:flex;"><span>        )                                                         
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算数据的哈希值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calDataHash</span>(<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">data</span>))
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">hash</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//计算数据的哈希值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> <span style="color:#61afef;font-weight:bold">calDataHash</span>(<span style="color:#e06c75">data</span> <span style="color:#e5c07b">string</span>) <span style="color:#e5c07b">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">sha256</span>.<span style="color:#61afef;font-weight:bold">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash</span>.<span style="color:#61afef;font-weight:bold">Write</span>([]<span style="color:#e5c07b">byte</span>(<span style="color:#e06c75">data</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">return</span> <span style="color:#e5c07b">string</span>(<span style="color:#e06c75">hash</span>.<span style="color:#61afef;font-weight:bold">Sum</span>(<span style="color:#e5c07b">nil</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//从结构化文件创建默克尔树
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">MHTree</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tree</span> <span style="color:#a6e22e">MHTree</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//打开文件
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7f848e">//从结构化文件创建默克尔树
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">func</span> <span style="color:#61afef;font-weight:bold">CreateMHTree</span>(<span style="color:#e06c75">fileName</span> <span style="color:#e5c07b">string</span>) <span style="color:#e06c75">MHTree</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">var</span> <span style="color:#e06c75">tree</span> <span style="color:#e06c75">MHTree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//打开文件
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">file</span>, <span style="color:#e06c75">err</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">os</span>.<span style="color:#61afef;font-weight:bold">Open</span>(<span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">if</span> <span style="color:#e06c75">err</span> <span style="color:#56b6c2">!=</span> <span style="color:#e5c07b">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#e5c07b">panic</span>(<span style="color:#e06c75">err</span>)
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//获取读取器
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">buf</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">file</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//读取首行，获得叶子节点数目（要求叶子节点数目为2的整数次幂
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dataCountStr</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">ReadLine</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dataCount</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(string(<span style="color:#a6e22e">dataCountStr</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">defer</span> <span style="color:#e06c75">file</span>.<span style="color:#61afef;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//获取读取器
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">buf</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">bufio</span>.<span style="color:#61afef;font-weight:bold">NewReader</span>(<span style="color:#e06c75">file</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//读取首行，获得叶子节点数目（要求叶子节点数目为2的整数次幂
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">dataCountStr</span>, <span style="color:#e06c75">_</span>, <span style="color:#e06c75">_</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">buf</span>.<span style="color:#61afef;font-weight:bold">ReadLine</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">dataCount</span>, <span style="color:#e06c75">_</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">strconv</span>.<span style="color:#61afef;font-weight:bold">Atoi</span>(<span style="color:#e5c07b">string</span>(<span style="color:#e06c75">dataCountStr</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//判断幂次
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">level</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; ; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                                          
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">dataCount</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">level</span> = <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//判断幂次
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#e06c75">level</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">for</span> <span style="color:#e06c75">i</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">1</span>; ; <span style="color:#e06c75">i</span><span style="color:#56b6c2">++</span> {                                          
+</span></span><span style="display:flex;"><span>		<span style="color:#c678dd">if</span> <span style="color:#d19a66">2</span><span style="color:#56b6c2">&lt;&lt;</span><span style="color:#e06c75">i</span> <span style="color:#56b6c2">==</span> <span style="color:#e06c75">dataCount</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#e06c75">level</span> = <span style="color:#e06c75">i</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#c678dd">break</span>
 </span></span><span style="display:flex;"><span>		}
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//创建默克尔树
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//给非叶子节点赋值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">level</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                               
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">RootTree</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//创建默克尔树
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//给非叶子节点赋值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#c678dd">for</span> <span style="color:#e06c75">i</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">1</span>; <span style="color:#e06c75">i</span> <span style="color:#56b6c2">&lt;=</span> <span style="color:#d19a66">2</span><span style="color:#56b6c2">&lt;&lt;</span><span style="color:#e06c75">level</span><span style="color:#56b6c2">-</span><span style="color:#d19a66">1</span>; <span style="color:#e06c75">i</span><span style="color:#56b6c2">++</span> {                               
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">Index</span> = <span style="color:#e06c75">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">RootTree</span> = <span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">tree</span>
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//读取文件数据，给叶子节点赋值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#a6e22e">level</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {                  
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">str</span>, <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">buf</span>.<span style="color:#a6e22e">ReadLine</span>()
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Index</span> = <span style="color:#a6e22e">i</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">RootTree</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tree</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">tree</span>.<span style="color:#a6e22e">Nodes</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">Value</span> = string(<span style="color:#a6e22e">str</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#7f848e">//读取文件数据，给叶子节点赋值
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>	<span style="color:#c678dd">for</span> <span style="color:#e06c75">i</span> <span style="color:#56b6c2">:=</span> <span style="color:#d19a66">2</span> <span style="color:#56b6c2">&lt;&lt;</span> <span style="color:#e06c75">level</span>; <span style="color:#e06c75">i</span> &lt; <span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Length</span>; <span style="color:#e06c75">i</span><span style="color:#56b6c2">++</span> {                  
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">str</span>, <span style="color:#e06c75">_</span>, <span style="color:#e06c75">_</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">buf</span>.<span style="color:#61afef;font-weight:bold">ReadLine</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">Index</span> = <span style="color:#e06c75">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">RootTree</span> = <span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">tree</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">tree</span>.<span style="color:#e06c75">Nodes</span>[<span style="color:#e06c75">i</span>].<span style="color:#e06c75">Value</span> = <span style="color:#e5c07b">string</span>(<span style="color:#e06c75">str</span>)
 </span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">tree</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">return</span> <span style="color:#e06c75">tree</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">func</span> <span style="color:#61afef;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">var</span> <span style="color:#e06c75">fileName</span> <span style="color:#e5c07b">string</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;请输入原始数据文件名称&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mhTree1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;请输入比对数据文件名称&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">fileName</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">mhTree2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">CreateMHTree</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;请输入原始数据文件名称&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Scanln</span>(<span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">mhTree1</span> <span style="color:#56b6c2">:=</span> <span style="color:#61afef;font-weight:bold">CreateMHTree</span>(<span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;请输入比对数据文件名称&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Scanln</span>(<span style="color:#56b6c2">&amp;</span><span style="color:#e06c75">fileName</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">mhTree2</span> <span style="color:#56b6c2">:=</span> <span style="color:#61afef;font-weight:bold">CreateMHTree</span>(<span style="color:#e06c75">fileName</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mhTree1</span>.<span style="color:#a6e22e">GetRootHash</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mhTree2</span>.<span style="color:#a6e22e">GetRootHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash1</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">mhTree1</span>.<span style="color:#61afef;font-weight:bold">GetRootHash</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#e06c75">hash2</span> <span style="color:#56b6c2">:=</span> <span style="color:#e06c75">mhTree2</span>.<span style="color:#61afef;font-weight:bold">GetRootHash</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hash1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">hash2</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;用户没有改变数据&#34;</span>)
-</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;用户改变了数据&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#c678dd">if</span> <span style="color:#e06c75">hash1</span> <span style="color:#56b6c2">==</span> <span style="color:#e06c75">hash2</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;用户没有改变数据&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#c678dd">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#e06c75">fmt</span>.<span style="color:#61afef;font-weight:bold">Println</span>(<span style="color:#98c379">&#34;用户改变了数据&#34;</span>)
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>]]></description>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
 </item>
 <item>
   <title>零知识学习资料收集汇总</title>
