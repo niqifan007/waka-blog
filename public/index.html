@@ -167,84 +167,42 @@
 </li>
 <li>
 <p>然后往其中的pom.xml文件添加依赖</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">19
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#e06c75">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#e06c75">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>spring-boot-starter-web<span style="color:#e06c75">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.springframework.cloud<span style="color:#e06c75">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>spring-cloud-starter-openfeign<span style="color:#e06c75">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;version&gt;</span>4.0.1<span style="color:#e06c75">&lt;/version&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.projectlombok<span style="color:#e06c75">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>lombok<span style="color:#e06c75">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;optional&gt;</span>true<span style="color:#e06c75">&lt;/optional&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;/dependency&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">&lt;dependency&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;groupId&gt;</span>org.springframework.boot<span style="color:#e06c75">&lt;/groupId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;artifactId&gt;</span>spring-boot-configuration-processor<span style="color:#e06c75">&lt;/artifactId&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#e06c75">&lt;optional&gt;</span>true<span style="color:#e06c75">&lt;/optional&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#e06c75">&lt;/dependency&gt;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div></li>
+<pre tabindex="0"><code>&lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+            &lt;version&gt;4.0.1&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre></li>
 </ol>
 <h2 id="spring-cloud-openfeign">Spring Cloud OpenFeign</h2>
 <p>对于第三方REST API集成，有许多可以用的工具，这里我们选择Spring Cloud OpenFeign，因为这个对于Spring Boot 3支持方面比较好。</p>
 <p>接下来我们打开 <code>application.yml</code>，往其中添加下面的内容：</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#e06c75">openai-service</span>:
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">api-key</span>: xxxxxxxxxx
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">gpt-model</span>: gpt-3.5-turbo
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">audio-model</span>: whisper-1
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">http-client</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">read-timeout</span>: <span style="color:#d19a66">60000</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">connect-timeout</span>: <span style="color:#d19a66">60000</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">urls</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">base-url</span>: https://chat.579878700.xyz/v1
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">chat-url</span>: /chat/completions
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">create-transcription-url</span>: /audio/transcriptions
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
+<pre tabindex="0"><code>openai-service:
+  api-key: xxxxxxxxxx
+  gpt-model: gpt-3.5-turbo
+  audio-model: whisper-1
+  http-client:
+    read-timeout: 60000
+    connect-timeout: 60000
+  urls:
+    base-url: https://chat.579878700.xyz/v1
+    chat-url: /chat/completions
+    create-transcription-url: /audio/transcriptions
+</code></pre><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
 <p><code>gpt-model</code> ： <code>gpt-3.5-turbo</code> ，功能最强大的GPT-3.5模型，针对聊天进行了优化，成本仅为 <code>text-davinci-003</code> 的1/10，它可以执行任何语言任务，质量更好，输出更长，指令一致。</p>
 <p><code>audio-model</code> ： <code>whisper-1</code> ，通用语音识别模型。它是在一个大型的多样化音频数据集上进行训练的，也是一个多任务模型，可以执行多语言语音识别以及语音翻译和来自世界各地大约100种不同语言的音频文件的语言识别。</p>
 <p><code> read-time</code>和<code> connect-time</code>可以根据实际需求更改，这里我使用中文来回答，因此我设置的大一些，避免回答返回时间太长导致超时问题。</p>
@@ -506,7 +464,7 @@
 <p>下面是 <code>/transcription</code> 的请求/响应：</p>
 <p><img loading="lazy" src="https://thumbsnap.com/i/NbWLi3MG.png" srcset="https://thumbsnap.com/i/NbWLi3MG.png, https://thumbsnap.com/i/NbWLi3MG.png 1.5x, https://thumbsnap.com/i/NbWLi3MG.png 2x" sizes="auto" data-title="https://thumbsnap.com/i/NbWLi3MG.png" data-alt="https://thumbsnap.com/i/NbWLi3MG.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
 <p>感觉对中文的识别准确度还是可以的。</p>
-<p>使用Whisper模型的音频转录或翻译，文件上传目前限制为25 MB，并支持以下输入文件类型：<code>mp3</code>, <code>mp4</code>, <code>mpeg</code>, <code>mpga</code>, <code>m4a</code>, <code>wav</code>, and <code>webm</code>.</p>
+<p>使用Whisper模型的音频转录或翻译，文件上传目前限制为25 MB，并支持以下输入文件类型：<code>mp3</code>, <code>mp4</code>, <code>mpeg</code>, <code>mpga</code>, <code>m4a</code>, <code>wav</code>, <code>webm</code></p>
 <p>Whisper型号的定价目前设定为0.006美元/分钟。</p>
 <h2 id="使用whisper-api进行音频翻译">使用Whisper API进行音频翻译</h2>
 <p>除了音频转录，Whisper API还提供音频翻译端点 <code>/audio/translations</code> 。我也测试了这个特性。然而，我发现，尽管它说可以把音频翻译成英语，但我录了一个中文短语，并在应用程序中调用了 <code>/audio/translations</code> api，结果发现回应仍然是中文。我也用日语测试了这个api，它完整的翻译成了英语。这应该是一个bug。</p>

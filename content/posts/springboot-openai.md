@@ -72,7 +72,7 @@ OpenAI是人工智能和机器学习工具及API的领先提供商之一。它�
    
 2. 然后往其中的pom.xml文件添加依赖
 
-   ```xml
+   ```
    <dependency>
                <groupId>org.springframework.boot</groupId>
                <artifactId>spring-boot-starter-web</artifactId>
@@ -100,7 +100,7 @@ OpenAI是人工智能和机器学习工具及API的领先提供商之一。它�
 
 接下来我们打开 `application.yml`，往其中添加下面的内容：
 
-```yml
+```
 openai-service:
   api-key: xxxxxxxxxx
   gpt-model: gpt-3.5-turbo
@@ -284,7 +284,7 @@ OpenAI API调用需要传入一个带有API密钥的请求头“ `Authorization`
 
 感觉对中文的识别准确度还是可以的。
 
-使用Whisper模型的音频转录或翻译，文件上传目前限制为25 MB，并支持以下输入文件类型：`mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, and `webm`.
+使用Whisper模型的音频转录或翻译，文件上传目前限制为25 MB，并支持以下输入文件类型：`mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, `webm`
 
 Whisper型号的定价目前设定为0.006美元/分钟。
 
