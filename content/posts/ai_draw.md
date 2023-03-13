@@ -38,7 +38,8 @@ repost:
 # See details front matter: https://fixit.lruihao.cn/documentation/content/#front-matter
 ---
 ## Stable Diffusion
-
+{{< image src="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" width=2316px loading=lazy >}}  
+   
 Stable Diffusion 大概是时下最流行的两个项目之一，另外一个就是大名鼎鼎的 ChatGPT 了。
 
 对于 Stable Diffusion 最简单的理解，就是文字转图片，只需要描述一段文字（比如：一只在草地上的白色小猫咪），它就能帮你生成一张图片。而随着技术的迭代，目前 Stable Diffusion 已经能够生成非常艺术化的图片了，完全有赶超人类的架势。
@@ -65,8 +66,8 @@ Stable Diffusion 傻瓜包里包含两个部分：
 网址: [https://civitai.com](https://civitai.com)  
 具体教程可以看这个视频：  
 {{< bilibili BV1Py4y1d7eJ >}}
-特别是这个up主也分享了很多自己训练LoRA模型的视频，可以参考一下。  
-还有更高级的玩法篇幅比较多，先写这么多，随缘更新。  
+特别是这个up主也分享了很多自己训练LoRA模型的教程视频，可以参考一下。  
+还有更高级的玩法比如指定动作之类的，篇幅比较多，先写这么多，随缘更新。  
 ### 资源
 
 -   [百度盘](https://pan.baidu.com/s/1DmLU6z-RkML5U4jVyeokSg?pwd=1234)

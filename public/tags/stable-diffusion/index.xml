@@ -10,6 +10,7 @@
   <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
   <guid>http://blog.579878700.xyz/posts/ai_draw/</guid>
   <description><![CDATA[<h2 id="stable-diffusion">Stable Diffusion</h2>
+<a class="lightgallery" href="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" data-thumbnail="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" data-sub-html="<h2>https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg</h2>"></a>
 <p>Stable Diffusion 大概是时下最流行的两个项目之一，另外一个就是大名鼎鼎的 ChatGPT 了。</p>
 <p>对于 Stable Diffusion 最简单的理解，就是文字转图片，只需要描述一段文字（比如：一只在草地上的白色小猫咪），它就能帮你生成一张图片。而随着技术的迭代，目前 Stable Diffusion 已经能够生成非常艺术化的图片了，完全有赶超人类的架势。</p>
 <p>甚至，已经有不少工作被这类服务替代，比如制作一个 logo 图片，画一张虚拟老婆照片，画质堪比相机。</p>
@@ -28,8 +29,8 @@
 <p>网址: <a href="https://civitai.com"target="_blank" rel="external nofollow noopener noreferrer">https://civitai.com<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><br>
 具体教程可以看这个视频：<br>
 <div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1Py4y1d7eJ&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
-特别是这个up主也分享了很多自己训练LoRA模型的视频，可以参考一下。<br>
-还有更高级的玩法篇幅比较多，先写这么多，随缘更新。</p>
+特别是这个up主也分享了很多自己训练LoRA模型的教程视频，可以参考一下。<br>
+还有更高级的玩法比如指定动作之类的，篇幅比较多，先写这么多，随缘更新。</p>
 <h3 id="资源">资源</h3>
 <ul>
 <li><a href="https://pan.baidu.com/s/1DmLU6z-RkML5U4jVyeokSg?pwd=1234"target="_blank" rel="external nofollow noopener noreferrer">百度盘<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>

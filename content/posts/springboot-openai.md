@@ -72,7 +72,7 @@ OpenAI是人工智能和机器学习工具及API的领先提供商之一。它�
    
 2. 然后往其中的pom.xml文件添加依赖
 
-   ```
+   ```java
    <dependency>
                <groupId>org.springframework.boot</groupId>
                <artifactId>spring-boot-starter-web</artifactId>
@@ -100,7 +100,7 @@ OpenAI是人工智能和机器学习工具及API的领先提供商之一。它�
 
 接下来我们打开 `application.yml`，往其中添加下面的内容：
 
-```
+```java
 openai-service:
   api-key: xxxxxxxxxx
   gpt-model: gpt-3.5-turbo

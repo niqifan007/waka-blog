@@ -130,6 +130,7 @@
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
     <a href="/posts/ai_draw/">AI 绘画 Stable Diffusion 傻瓜包 &#43; 模型下载分享</a>
   </h1><div class="post-meta"><span class="post-author"><span class="author"><img loading="lazy" src="/images/avatar.jpg" srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x" sizes="auto" data-title="waka" data-alt="waka" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;waka</span></span>&nbsp;<span class="post-publish" title='2023-03-14 01:38:33'>发布于 <time datetime="2023-03-14">2023-03-14</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/stable-diffusion/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Stable Diffusion</a></span></div><div class="content"><h2 id="stable-diffusion">Stable Diffusion</h2>
+<a class="lightgallery" href="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" data-thumbnail="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" data-sub-html="<h2>https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg</h2>"><img loading="lazy" src="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" srcset="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg, https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg 1.5x, https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg 2x" sizes="auto" data-title="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" data-alt="https://original-game.com/wp-content/uploads/2023/02/makima-eyecatch2-1200x630.jpg" width="2316px" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></a>
 <p>Stable Diffusion 大概是时下最流行的两个项目之一，另外一个就是大名鼎鼎的 ChatGPT 了。</p>
 <p>对于 Stable Diffusion 最简单的理解，就是文字转图片，只需要描述一段文字（比如：一只在草地上的白色小猫咪），它就能帮你生成一张图片。而随着技术的迭代，目前 Stable Diffusion 已经能够生成非常艺术化的图片了，完全有赶超人类的架势。</p>
 <p>甚至，已经有不少工作被这类服务替代，比如制作一个 logo 图片，画一张虚拟老婆照片，画质堪比相机。</p>
@@ -148,8 +149,8 @@
 <p>网址: <a href="https://civitai.com"target="_blank" rel="external nofollow noopener noreferrer">https://civitai.com<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a><br>
 具体教程可以看这个视频：<br>
 <div class="bilibili"><iframe src="//player.bilibili.com/player.html?bvid=BV1Py4y1d7eJ&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>
-特别是这个up主也分享了很多自己训练LoRA模型的视频，可以参考一下。<br>
-还有更高级的玩法篇幅比较多，先写这么多，随缘更新。</p>
+特别是这个up主也分享了很多自己训练LoRA模型的教程视频，可以参考一下。<br>
+还有更高级的玩法比如指定动作之类的，篇幅比较多，先写这么多，随缘更新。</p>
 <h3 id="资源">资源</h3>
 <ul>
 <li><a href="https://pan.baidu.com/s/1DmLU6z-RkML5U4jVyeokSg?pwd=1234"target="_blank" rel="external nofollow noopener noreferrer">百度盘<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a></li>
@@ -196,42 +197,84 @@
 </li>
 <li>
 <p>然后往其中的pom.xml文件添加依赖</p>
-<pre tabindex="0"><code>&lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
-            &lt;version&gt;4.0.1&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-&lt;/dependency&gt;
-</code></pre></li>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">springframework</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">spring</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">starter</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">web</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">springframework</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">cloud</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">spring</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">cloud</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">starter</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">openfeign</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">version</span><span style="color:#56b6c2">&gt;</span><span style="color:#d19a66">4.0.1</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">version</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">projectlombok</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">lombok</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span><span style="color:#e5c07b">true</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">springframework</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">spring</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">configuration</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">processor</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span><span style="color:#e5c07b">true</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 </ol>
 <h2 id="spring-cloud-openfeign">Spring Cloud OpenFeign</h2>
 <p>对于第三方REST API集成，有许多可以用的工具，这里我们选择Spring Cloud OpenFeign，因为这个对于Spring Boot 3支持方面比较好。</p>
 <p>接下来我们打开 <code>application.yml</code>，往其中添加下面的内容：</p>
-<pre tabindex="0"><code>openai-service:
-  api-key: xxxxxxxxxx
-  gpt-model: gpt-3.5-turbo
-  audio-model: whisper-1
-  http-client:
-    read-timeout: 60000
-    connect-timeout: 60000
-  urls:
-    base-url: https://chat.579878700.xyz/v1
-    chat-url: /chat/completions
-    create-transcription-url: /audio/transcriptions
-</code></pre><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
+<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#e06c75">openai</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">service</span><span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">api</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">key</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">xxxxxxxxxx</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">gpt</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">gpt</span><span style="color:#56b6c2">-</span><span style="color:#d19a66">3.5</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">turbo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">audio</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">whisper</span><span style="color:#56b6c2">-</span><span style="color:#d19a66">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">http</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">client</span><span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">read</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">timeout</span><span style="color:#56b6c2">:</span> <span style="color:#d19a66">60000</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">connect</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">timeout</span><span style="color:#56b6c2">:</span> <span style="color:#d19a66">60000</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">urls</span><span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">base</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">url</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">https</span><span style="color:#56b6c2">:</span><span style="color:#7f848e">//chat.579878700.xyz/v1
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>    <span style="color:#e06c75">chat</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">url</span><span style="color:#56b6c2">:</span> <span style="color:#56b6c2">/</span><span style="color:#e06c75">chat</span><span style="color:#56b6c2">/</span><span style="color:#e06c75">completions</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">create</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">transcription</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">url</span><span style="color:#56b6c2">:</span> <span style="color:#56b6c2">/</span><span style="color:#e06c75">audio</span><span style="color:#56b6c2">/</span><span style="color:#e06c75">transcriptions</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
 <p><code>gpt-model</code> ： <code>gpt-3.5-turbo</code> ，功能最强大的GPT-3.5模型，针对聊天进行了优化，成本仅为 <code>text-davinci-003</code> 的1/10，它可以执行任何语言任务，质量更好，输出更长，指令一致。</p>
 <p><code>audio-model</code> ： <code>whisper-1</code> ，通用语音识别模型。它是在一个大型的多样化音频数据集上进行训练的，也是一个多任务模型，可以执行多语言语音识别以及语音翻译和来自世界各地大约100种不同语言的音频文件的语言识别。</p>
 <p><code> read-time</code>和<code> connect-time</code>可以根据实际需求更改，这里我使用中文来回答，因此我设置的大一些，避免回答返回时间太长导致超时问题。</p>
