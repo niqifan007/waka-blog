@@ -3,7 +3,251 @@
     <title>区块链 - 分类 - waka&#39;s blog</title>
     <link>http://blog.579878700.xyz/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/</link>
     <description>区块链 - 分类 - waka&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 15 Mar 2023 23:36:31 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 17 Mar 2023 00:35:21 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="self" type="application/rss+xml" /><item>
+  <title>solidity动态数组的增删改查</title>
+  <link>http://blog.579878700.xyz/posts/solidity_curd/</link>
+  <pubDate>Fri, 17 Mar 2023 00:35:21 &#43;0800</pubDate>
+  <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
+  <guid>http://blog.579878700.xyz/posts/solidity_curd/</guid>
+  <description><![CDATA[<h2 id="数组类型">数组类型</h2>
+<p>Solidity支持两种数组: 静态数组和动态数组。</p>
+<p>又分<code>storage</code>与<code>memory</code>型数组</p>
+<pre tabindex="0"><code>uint[] memory list;
+//变长memory数组，使用前必须确定长度
+list =new uint[](a);
+//然后再使用，一般用在函数内
+memory型数组不能使用pop,push也不能修改length
+</code></pre><h3 id="静态数组">静态数组</h3>
+<pre tabindex="0"><code>// 固定长度为2的静态数组定义
+uint[2] fixedArray;
+//定长数组实例化
+fixedArray = [4, 6];
+</code></pre><p>静态数组不可新增元素，但可修改现有元素的值。</p>
+<h3 id="动态数组">动态数组</h3>
+<p>动态数组，长度不固定，可以动态添加元素。</p>
+<pre tabindex="0"><code>//声明
+uint[] dynamicArray;
+//初始化，这里实例化一个长度为2的数组，值为0。
+dynamicArray = new uint[](2);
+</code></pre><div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">105
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7f848e">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span><span style="color:#c678dd">pragma solidity</span> <span style="color:#56b6c2">^</span><span style="color:#d19a66">0</span>.<span style="color:#d19a66">8</span>.<span style="color:#d19a66">9</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">library</span> <span style="color:#e06c75">Array</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">push</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>, <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_num</span>) <span style="color:#c678dd">internal</span> <span style="color:#c678dd">pure</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#7f848e">// 在可变数组的 末尾追加 一个value (_num)
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>            <span style="color:#61afef;font-weight:bold">mstore</span>(<span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">mul</span>(<span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>), <span style="color:#d19a66">1</span>), <span style="color:#d19a66">0x20</span>)), <span style="color:#e06c75">_num</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#7f848e">// 可变数组的length 加 1
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>            <span style="color:#61afef;font-weight:bold">mstore</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>), <span style="color:#d19a66">1</span>))
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#7f848e">// 0x40 是空闲内存指针的预定义位置 (value 为 空闲指针开始位)
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>            <span style="color:#61afef;font-weight:bold">mstore</span>(<span style="color:#d19a66">0x40</span>, <span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#d19a66">0x40</span>), <span style="color:#d19a66">0x20</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">pop</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>) <span style="color:#c678dd">internal</span> <span style="color:#c678dd">pure</span> <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">num_</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#7f848e">// 取出可变数组的最后一个value
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>            <span style="color:#e06c75">num_</span> <span style="color:#56b6c2">:=</span> <span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">mul</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>), <span style="color:#d19a66">0x20</span>)))
+</span></span><span style="display:flex;"><span>            <span style="color:#7f848e">// length - 1
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>            <span style="color:#61afef;font-weight:bold">mstore</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">sub</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>), <span style="color:#d19a66">1</span>))
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">del</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>, <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_index</span>) <span style="color:#c678dd">internal</span> <span style="color:#c678dd">pure</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#7f848e">// 下标位置需 小于 数组.length
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>            <span style="color:#e06c75">if</span> <span style="color:#61afef;font-weight:bold">lt</span>(<span style="color:#e06c75">_index</span>, <span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>)) {
+</span></span><span style="display:flex;"><span>                <span style="color:#7f848e">// 将最后一个value 移到 _index 下标处 
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>                <span style="color:#61afef;font-weight:bold">mstore</span>(
+</span></span><span style="display:flex;"><span>                    <span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">mul</span>(<span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#e06c75">_index</span>, <span style="color:#d19a66">1</span>), <span style="color:#d19a66">0x20</span>)),
+</span></span><span style="display:flex;"><span>                    <span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#61afef;font-weight:bold">add</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">mul</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>), <span style="color:#d19a66">0x20</span>)))
+</span></span><span style="display:flex;"><span>                )
+</span></span><span style="display:flex;"><span>                <span style="color:#7f848e">// length - 1
+</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>                <span style="color:#61afef;font-weight:bold">mstore</span>(<span style="color:#e06c75">_nums</span>, <span style="color:#61afef;font-weight:bold">sub</span>(<span style="color:#61afef;font-weight:bold">mload</span>(<span style="color:#e06c75">_nums</span>), <span style="color:#d19a66">1</span>))
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">update</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_index</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_num</span>
+</span></span><span style="display:flex;"><span>    ) <span style="color:#c678dd">internal</span> <span style="color:#c678dd">pure</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">_nums</span>[<span style="color:#e06c75">_index</span>] <span style="color:#56b6c2">=</span> <span style="color:#e06c75">_num</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">get</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>, <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_index</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">internal</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">pure</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">_nums</span>[<span style="color:#e06c75">_index</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#c678dd">contract</span> <span style="color:#e5c07b">testArr</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">using</span> <span style="color:#e06c75">Array</span> <span style="color:#c678dd">for</span> <span style="color:#e5c07b">uint256</span>[];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">push</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>, <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">num</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">external</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">pure</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">_nums</span>.<span style="color:#e06c75">push</span>(<span style="color:#e06c75">num</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">_nums</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">pop</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">external</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">pure</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span>, <span style="color:#e5c07b">uint256</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">num_</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">_nums</span>.<span style="color:#e06c75">pop</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> (<span style="color:#e06c75">_nums</span>, <span style="color:#e06c75">num_</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">del</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>, <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_index</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">external</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">pure</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">_nums</span>.<span style="color:#e06c75">del</span>(<span style="color:#e06c75">_index</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">_nums</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">update</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_index</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_num</span>
+</span></span><span style="display:flex;"><span>    ) <span style="color:#c678dd">external</span> <span style="color:#c678dd">pure</span> <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">_nums</span>.<span style="color:#e06c75">update</span>(<span style="color:#e06c75">_index</span>, <span style="color:#e06c75">_num</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">_nums</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">function</span> <span style="color:#61afef;font-weight:bold">get</span>(<span style="color:#e5c07b">uint256</span>[] <span style="color:#c678dd">memory</span> <span style="color:#e06c75">_nums</span>, <span style="color:#e5c07b">uint256</span> <span style="color:#e06c75">_index</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">external</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">pure</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">returns</span> (<span style="color:#e5c07b">uint256</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">_nums</span>.<span style="color:#e06c75">get</span>(<span style="color:#e06c75">_index</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description>
+</item>
+<item>
   <title>OrderBook的实现思路</title>
   <link>http://blog.579878700.xyz/posts/orderbook/</link>
   <pubDate>Wed, 15 Mar 2023 23:36:31 &#43;0800</pubDate>

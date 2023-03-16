@@ -1,15 +1,170 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-  <channel>
-    <title>区块链 - 标签 - waka&#39;s blog</title>
-    <link>http://blog.579878700.xyz/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/</link>
-    <description>区块链 - 标签 - waka&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 17 Mar 2023 00:35:21 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="self" type="application/rss+xml" /><item>
-  <title>solidity动态数组的增删改查</title>
-  <link>http://blog.579878700.xyz/posts/solidity_curd/</link>
-  <pubDate>Fri, 17 Mar 2023 00:35:21 &#43;0800</pubDate>
-  <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
-  <guid>http://blog.579878700.xyz/posts/solidity_curd/</guid>
-  <description><![CDATA[<h2 id="数组类型">数组类型</h2>
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>solidity动态数组的增删改查 - waka&#39;s blog</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="solidity 内存(memory) 可变数组(动态数组) 的 增删改查" /><meta name="keywords" content='solidity,, 内存(memory),, 可变数组(动态数组),, 增删改查,, 区块链' /><meta itemprop="name" content="solidity动态数组的增删改查">
+<meta itemprop="description" content="solidity 内存(memory) 可变数组(动态数组) 的 增删改查"><meta itemprop="datePublished" content="2023-03-17T00:35:21+08:00" />
+<meta itemprop="dateModified" content="2023-03-17T00:35:21+08:00" />
+<meta itemprop="wordCount" content="670">
+<meta itemprop="keywords" content="solidity,区块链," /><meta property="og:title" content="solidity动态数组的增删改查" />
+<meta property="og:description" content="solidity 内存(memory) 可变数组(动态数组) 的 增删改查" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.579878700.xyz/posts/solidity_curd/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-17T00:35:21+08:00" />
+<meta property="article:modified_time" content="2023-03-17T00:35:21+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="solidity动态数组的增删改查"/>
+<meta name="twitter:description" content="solidity 内存(memory) 可变数组(动态数组) 的 增删改查"/>
+<meta name="application-name" content="waka&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="waka&#39;s blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="%e7%8b%90%e7%8b%b8.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://blog.579878700.xyz/posts/solidity_curd/" /><link rel="prev" href="http://blog.579878700.xyz/posts/orderbook/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "solidity动态数组的增删改查",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/blog.579878700.xyz\/posts\/solidity_curd\/"
+    },"genre": "posts","keywords": "solidity, 区块链","wordcount":  670 ,
+    "url": "http:\/\/blog.579878700.xyz\/posts\/solidity_curd\/","datePublished": "2023-03-17T00:35:21+08:00","dateModified": "2023-03-17T00:35:21+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "waka"
+      },"description": "solidity 内存(memory) 可变数组(动态数组) 的 增删改查"
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="waka&#39;s blog"><img loading="lazy" src="/%e7%8b%90%e7%8b%b8.svg" srcset="/%e7%8b%90%e7%8b%b8.svg, /%e7%8b%90%e7%8b%b8.svg 1.5x, /%e7%8b%90%e7%8b%b8.svg 2x" sizes="auto" data-title="waka&#39;s blog" data-alt="waka&#39;s blog" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">waka&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="waka&#39;s blog"><img loading="lazy" src="/%e7%8b%90%e7%8b%b8.svg" srcset="/%e7%8b%90%e7%8b%b8.svg, /%e7%8b%90%e7%8b%b8.svg 1.5x, /%e7%8b%90%e7%8b%b8.svg 2x" sizes="auto" data-title="/狐狸.svg" data-alt="/狐狸.svg" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">waka&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>solidity动态数组的增删改查</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/images/avatar.jpg" srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x" sizes="auto" data-title="waka" data-alt="waka" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;waka</span></span>
+          <span class="post-category">收录于 <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 区块链</a></span></div>
+      <div class="post-meta-line"><span title=2023-03-17&#32;00:35:21><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-17">2023-03-17</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 670 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#数组类型">数组类型</a>
+      <ul>
+        <li><a href="#静态数组">静态数组</a></li>
+        <li><a href="#动态数组">动态数组</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="数组类型">数组类型</h2>
 <p>Solidity支持两种数组: 静态数组和动态数组。</p>
 <p>又分<code>storage</code>与<code>memory</code>型数组</p>
 <pre tabindex="0"><code>uint[] memory list;
@@ -245,88 +400,40 @@ dynamicArray = new uint[](2);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
-</div>]]></description>
-</item>
-<item>
-  <title>OrderBook的实现思路</title>
-  <link>http://blog.579878700.xyz/posts/orderbook/</link>
-  <pubDate>Wed, 15 Mar 2023 23:36:31 &#43;0800</pubDate>
-  <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
-  <guid>http://blog.579878700.xyz/posts/orderbook/</guid>
-  <description><![CDATA[<h2 id="什么是orderbook">什么是OrderBook</h2>
-<p><strong>OrderBook是一个包含了所有交易者信息的订单集合</strong>，他们想买或者想卖。<strong>想买的order叫做bid，想卖的order叫做ask</strong>，这些bid和ask的order一旦满足了各自的条件，就会尽可能快的完成配对，促成一笔交易。这里有两个种类的order需要介绍一下，它们也是最为基本的交易订单。<strong>第一种是市价 market order，买和卖都是依据当前在orderbook能寻找到的最优价格执行</strong>。<strong>第二种是限价 limit order，买和卖都是按照已经确定量和价格进行</strong>。OrderBook是传统金融中一个很重要的交易方式，通过OrderBook中显示的信息，可以判断当前市场的供需关系以及价格关系，基于以上的判断可以对市场中的下一步发生的变化进行一个判断。<strong>在去中心化金融(Defi)，刚开始发展时也借鉴到了OrderBook的模式</strong>，由于传统的OrderBook由中心化机构进行给出，导致了信息中心化不透明。所以在Defi中想实现一个OrderBook完全只有买方和卖方进行参与，而机构只收取相依的手续费即可。<br>
-看起来这样的想法是一种很不错的想法，提供了一个更加公平和自由度更高的一个市场让人们去操作。但是在实际中进行时会发现问题：</p>
-<ul>
-<li><strong>对于OrderBook需求来说整个区块链网络中交易成交的速率和数量都无法满足</strong>，即使以太坊的速率相较于比特币网络有了很大的提高。</li>
-<li>在交易中有gas的存在，<strong>如果没有一种很好的方法去定位到合适的订单的话，随着订单数量的变多，找到相应订单所需的gas会消耗很大</strong>。并且每笔交易都有一个gas上限，当gas达到相应上限的时候就会导致交易失败。</li>
-</ul>
-<h2 id="实现orderbook思路">实现OrderBook思路</h2>
-<h2 id="一般的思路">一般的思路</h2>
-<p>抛开以太坊特殊的条件，我们在实现OrderBook的时候，采用的最常用的方法就是蛮力法。思路：</p>
-<ul>
-<li>创建买单和买单两个数组</li>
-<li>当有买单创建的时候，对买单数组进行遍历，找到对应价格对应数量的订单，完成一笔交易。如果没找到，将买单加入买单数组。同理创建卖单时也进行相应的操作。</li>
-</ul>
-<p>这个方法能确保找到所需要的的交易，但是<strong>整个过程的时间复杂度为O(n)</strong>,然后可以进行并发和互斥锁结合，可以在短时间内处理大量的买单和买单满足需求。但是随着订单量的增多，所需要的时间也会增多，这在链上和链下的环境中都是不能接受的。<br>
-但是，如果不采用蛮力法的话，将<strong>买单和卖单分别用排序二叉树的方式进行数据保存，那样的话时间复杂度就会变为O(logn)</strong>，这样可以优化查找，只是在插入是有点麻烦。</p>
-<h2 id="换种思路">换种思路</h2>
-<p>在智能合约中我们要尽量避免时使用循环的方式，这是很费gas的。而为了确保能够得到想要的价格。我们可以这样设计：</p>
-<ul>
-<li>创建两个买单和卖单的两个映射
-<ul>
-<li><code>mapping(uint =&gt; mapping(uint =&gt; address[])) Bid;</code></li>
-<li><code>mapping(uint =&gt; mapping(uint =&gt; address[])) Ask;</code></li>
-<li><strong>前一个uint是价格，第二个uint是数量，最后面的是卖方或买方的地址</strong>；</li>
-</ul>
-</li>
-<li>每次有买单和卖单进来的时候，在mapping中进行搜索，完成交易。搜索不到的话加入对应的mapping中即可。</li>
-</ul>
-<p>看上去这样的两个映射可以解决买卖双方的订单的查找的时间复杂度问题（<strong>将时间复杂度降为O(1)</strong>）。但是这样却忽略了一个问题，这样做我们无法看到整个市场的变化和趋势。我们这样设计代码的话只是实现了OrderBook的一部分功能。如果想要实现OrderBook，还有很多要进行修改的地方。</p>
-<h2 id="第三种思路">第三种思路</h2>
-<p>在链上尽量不要使用大循环，但是我们可以将大循环变为小的循环，这样来说是可以的。同时我们也要反映整个OrderBook的变化，我们就可以设计一个压缩前缀树：</p>
-<ul>
-<li><strong>树中的每个节点为数字0~9，这样从头结点到叶子节点前的节点就可以连成一串数字，这个数字表示金额</strong>，每个叶子节点储存的是订单数组，每个订单保存了在此金额下的数量和地址。</li>
-<li>同样树也要分两颗树，买家树和卖家树。</li>
-<li><strong>每次有新金额出现时，要对树进行修改</strong>，对树进行扩展，保证从头到尾连成的数字为金额。</li>
-<li><strong>同时当金额对应的叶子节点中数组长度为0时，要对树进行删除</strong>，这样做的目的是保证在对树遍历时减少时间消耗。</li>
-<li><strong>在新买单创建时，先在卖家树中找到对应金额的数组，在对数组进行遍历找到对应金额(此时就将大循环优化为一个小循环)</strong>，找到对应订单后就成交交易。没找到的话就将其加入买家树。(同理，卖单也是这样处理)</li>
-</ul>
-<p>这样的话就可以兼顾市场变化和挂单的需求。</p>
-<h2 id="问题">问题</h2>
-<p>以上的思路都可以实现OrderBook，但是还有许多问题需要进行考虑：</p>
-<ul>
-<li>如果对应的数量找不到，但是存在两个或两个以上的订单之和满足要求的时候，要怎么进行处理？<strong>在时间复杂度较小的前提下如何完成这个拆分寻找的过程？</strong></li>
-<li><strong>整个树的结构要如何设计？才能使得在增删改查较为方便？</strong></li>
-</ul>
-<h2 id="结尾">结尾</h2>
-<p>虽然现在主流的DEX没有使用OrderBook，而是使用LP这样的方式，但是LP也会存在着很多的问题需要解决。正是因为OrderBook的一些功能无法满足Defi的需求，所以才会有LP的出现。技术的适用性是需要结合需求的。或许在以后可能会产生适应区块链的OrderBook。</p>]]></description>
-</item>
-<item>
-  <title>《Self-Sovereign Identity》(《身份自主权》中英文书籍)</title>
-  <link>http://blog.579878700.xyz/posts/ssi_book/</link>
-  <pubDate>Sun, 05 Mar 2023 23:27:33 &#43;0800</pubDate>
-  <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
-  <guid>http://blog.579878700.xyz/posts/ssi_book/</guid>
-  <description><![CDATA[<h2 id="百度网盘下载地址">百度网盘下载地址</h2>
-<blockquote>
-<p>链接：<a href="https://pan.baidu.com/s/1ZkE_goWKyTMtZPdyZXRp7A?pwd=b0m1"target="_blank" rel="external nofollow noopener noreferrer">https://pan.baidu.com/s/1ZkE_goWKyTMtZPdyZXRp7A?pwd=b0m1<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>
-提取码：<strong>b0m1</strong></p>
-</blockquote>
-<p>因为网上没有找到中文书籍，使用了deepl机翻，翻译的排版不是很好，但是基本能看懂。</p>
-<h2 id="内容简介">内容简介</h2>
-<p>​	Self-Sovereign Identity gives you a radical new perspective on how we represent ourselves in the world. This case study-driven book cuts through the jargon and hype to expose the amazing potential SSI offers for for security, privacy, identity, and even uprooting way the global economy works. SSI experts Drummond Reed and Alex Preukschat present a vision of the future, examining how SSI protocols will impact industries from banking through to government. You’ll get a clear mental model for how SSI works as you tour SSI-enabled eCommerce and eHealth applications and their advantages over current technologies. While you learn the philosophical and sociological concepts that underpin SSI, you’ll reach the book’s lightbulb moment: what this radical technology really means for the shape of our lives, our businesses, and our futures.</p>
-<p>what&rsquo;s inside<br>
-How SSI will affect your industry<br>
-The essential technical and legal concepts of SSI<br>
-The architecture of SSI software<br>
-Emerging standards for SSI</p>
-<p>​	自我主权身份 &ldquo;为您提供了一个关于我们如何在世界中代表自己的全新视角。这本以案例研究为导向的书突破了专业术语和炒作，揭示了SSI为安全、隐私、身份，甚至为全球经济运作方式提供的惊人潜力。SSI专家Drummond Reed和Alex Preukschat提出了未来的愿景，研究了SSI协议将如何影响从银行到政府的各个行业。当你参观SSI支持的电子商务和电子医疗应用以及它们相对于当前技术的优势时，你会对SSI如何工作有一个清晰的心理模型。在你学习支撑SSI的哲学和社会学概念的同时，你将迎来本书的闪光时刻：这项激进的技术对我们的生活、商业和未来的形态意味着什么。</p>
-<p>书中内容<br>
-SSI将如何影响你的行业<br>
-SSI的基本技术和法律概念<br>
-SSI软件的架构<br>
-新兴的SSI标准</p>
-<p></p>]]></description>
-</item>
-</channel>
-</rss>
+</div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-03-17&#32;00:35:21>更新于 2023-03-17&nbsp;</span>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://blog.579878700.xyz/posts/solidity_curd/" data-title="solidity动态数组的增删改查" data-hashtags="solidity,区块链"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://blog.579878700.xyz/posts/solidity_curd/" data-hashtag="solidity"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://blog.579878700.xyz/posts/solidity_curd/" data-title="solidity动态数组的增删改查"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/solidity/' class="post-tag">solidity</a><a href='/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/' class="post-tag">区块链</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/orderbook/" class="post-nav-item" rel="prev" title="OrderBook的实现思路"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>OrderBook的实现思路</a></div>
+</div>
+</article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18-RC"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span></div><div class="footer-line statistics"></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":false},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":6,"speed":100}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>
