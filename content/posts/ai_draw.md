@@ -2,7 +2,7 @@
 title: AI 绘画 Stable Diffusion 傻瓜包 + 模型下载分享
 subtitle:
 date: 2023-03-14T01:38:33+08:00
-draft: false
+draft: true
 author:
   name: waka
   link:
