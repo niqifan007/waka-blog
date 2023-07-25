@@ -81,7 +81,7 @@ sudo systemctl restart docker
 [南京大学镜像站](https://doc.nju.edu.cn/books/35f4a) | `https://docker.nju.edu.cn` | | Docker Hub、GCR、GHCR、Quay、NVCR 等
 [上海交大镜像站](https://mirrors.sjtug.sjtu.edu.cn/) | `https://docker.mirrors.sjtug.sjtu.edu.cn` | | Docker Hub、GCR 等
 
-> ⚠️ 部分网友反馈以下镜像站存在未同步最新源镜像问题，请按需选用（评论区可考古）
+> ⚠️ 以下镜像站存在未同步最新源镜像问题，请按需选用
 > - 阿里云
 
 ## 检查加速器是否生效
