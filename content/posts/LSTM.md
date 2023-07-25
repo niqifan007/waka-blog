@@ -156,7 +156,7 @@ plt.show()
 # 从这里我们可以看到，大多数的延误时间在10-15分钟，所以使用这个来判断航班是否延误
 ```
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___3_0.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___3_0.png" width=900px loading=lazy >}}
 
 ```python
 # 差不多也是中位数
@@ -167,7 +167,7 @@ df['late_aircraft_ct'].plot()
 plt.show()
 ```
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___4_0.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___4_0.png" width=900px loading=lazy >}}
 
 ```python
 # 航空公司计数
@@ -179,7 +179,7 @@ plt.title("Carrier Flight counts")
 plt.show()
 ```
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___5_0.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___5_0.png" width=900px loading=lazy >}}
 
 ```python
 # 机场计数
@@ -191,7 +191,7 @@ plt.title("Airport Flight counts")
 plt.show()
 ```
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___6_0.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___6_0.png" width=900px loading=lazy >}}
 
 ```python
 encoder=LabelEncoder()
@@ -243,7 +243,7 @@ late_aircraft_delay mean: 2.7714400135202206 24.285714285714285
 carrier_delay mean: 3.2955479971538186 26.5
 ```
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___7_1.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___7_1.png" width=900px loading=lazy >}}
 
 ```python
 # 分割数据集，训练集和验证集
@@ -348,7 +348,7 @@ plt.show()
 ```
 
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___11_0.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___11_0.png" width=900px loading=lazy >}}
 
 ```python
 y_pred=model.predict(X2_train)
@@ -366,7 +366,7 @@ ax.stackplot(units,y_pred[0:100],[1 if y>0.5 else 0 for y in y_train][0:100],lab
 print(np.max(y_train))
 ```
 
-{{< image src="https://www.kaggleusercontent.com/kf/125688440/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..o0hrqx1cNv0a_0IwUYk0hg.d6ssn29tCN5MrV3agkqlWJvfMs-gDmqdCCzJdOLZ440RR2xCSKDji7bRHZcrQ76bYpMLJ-lQh6u5oNo_rtgq_2wS1WEbudj4ROWrvV4JU5Nmc6aQkIJGYrhHcd2KwdRgVQMVhf9byILBF8nmQT26v1ZlpKnR81ybA_AZAWdmzDQRxhA-7egjr_Bo1mP-L21JOdZgwOntc0I8Oiz9vFy9ib377-j3qgZgI04kncKPC6cobUU8TkmkLai9qLoOFAKo6aJ0dxmuzgCNXdrXZ9bzXRQ35sX8KtFAA_DaGawggJdJlme0S1utrHckUyT05J7vTVMtRSaDgBDGsQcmoXrNECIrhHICK85HMbPH-Jz3MrN1-u596MtBUKYaI1nahYJJpJ3j636LrpwBF0SwbhIiGzJ8oX7yjb1O66_BSheGMquCi7-v6Qso0CwhLFOMWyfdsalIjndAmhSaVCndE1tX9iJv-zIWlPOuqfxq2J7y_meFrkkDnaETW0NerLyW90FNhTMR6ecCcg51j1PmHy0VbTFA48l6Xm6Zie3UaI-QdneaVktkWT3vFom4seE3v7wQgZ4g3UnTop17O8ybiarOoS2Nhc76SEw-Y7qXwa70ZmQN4DHXj_XxDAiptdGimOQ2dpOC3v6gl5cGRFfoCXkYEMXWE1DXPwYILM9pRxbdAgTIyTQGFUZ2CUR7BnlKZDDZ.DPoB5qp3t3sY8d2uvEN3ow/__results___files/__results___13_1.png" width=900px loading=lazy >}}
+{{< image src="https://s1.imagehub.cc/images/2023/07/25/__results___13_1.png" width=900px loading=lazy >}}
 
 ```python
 def accuracy(predictions, labels):
