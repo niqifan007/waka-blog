@@ -621,9 +621,9 @@ theme = "FixIt"
         visitor = true
         commentCount = true
         # FixIt 0.2.17 | CHANGED enable lightgallery support
-        lightgallery = true
+        lightgallery = false
         # FixIt 0.2.17 | NEW enable Katex support
-        katex = true
+        katex = false
       # FixIt 0.2.14 | NEW Giscus comments config
       [params.page.comment.giscus]
         enable = false
@@ -864,7 +864,7 @@ theme = "FixIt"
 
 # 作者配置
 [author]
-  name = "xxxx"
+  name = "waka"
   email = ""
   link = ""
   avatar = "/images/avatar.jpg" # FixIt 0.2.18 | 新增
