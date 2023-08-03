@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>使用springboot整合OpenAI的Chatgpt api和Whisper api - waka&#39;s blog</title><meta name="author" content="waka">
+<meta name="author-link" content="">
+<meta name="description" content="使用springboot整合OpenAI的chatgpt api和whisper api" /><meta name="keywords" content='springboot,, openai,, chatgpt,, whisper,, java' /><meta itemprop="name" content="使用springboot整合OpenAI的Chatgpt api和Whisper api">
+<meta itemprop="description" content="使用springboot整合OpenAI的chatgpt api和whisper api"><meta itemprop="datePublished" content="2023-03-13T22:41:46+08:00" />
+<meta itemprop="dateModified" content="2023-03-13T22:41:46+08:00" />
+<meta itemprop="wordCount" content="2398">
+<meta itemprop="keywords" content="springboot,openai," /><meta property="og:title" content="使用springboot整合OpenAI的Chatgpt api和Whisper api" />
+<meta property="og:description" content="使用springboot整合OpenAI的chatgpt api和whisper api" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://blog.579878700.xyz/springboot-openai/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-13T22:41:46+08:00" />
+<meta property="article:modified_time" content="2023-03-13T22:41:46+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用springboot整合OpenAI的Chatgpt api和Whisper api"/>
+<meta name="twitter:description" content="使用springboot整合OpenAI的chatgpt api和whisper api"/>
+<meta name="application-name" content="waka&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="waka&#39;s blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="%e7%8b%90%e7%8b%b8.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://blog.579878700.xyz/springboot-openai/" /><link rel="prev" href="http://blog.579878700.xyz/ssi_book/" /><link rel="next" href="http://blog.579878700.xyz/orderbook/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "使用springboot整合OpenAI的Chatgpt api和Whisper api",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/blog.579878700.xyz\/springboot-openai\/"
+    },"genre": "posts","keywords": "springboot, openai","wordcount":  2398 ,
+    "url": "http:\/\/blog.579878700.xyz\/springboot-openai\/","datePublished": "2023-03-13T22:41:46+08:00","dateModified": "2023-03-13T22:41:46+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "waka"
+      },"description": "使用springboot整合OpenAI的chatgpt api和whisper api"
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="waka&#39;s blog"><img loading="lazy" src="/%e7%8b%90%e7%8b%b8.svg" srcset="/%e7%8b%90%e7%8b%b8.svg, /%e7%8b%90%e7%8b%b8.svg 1.5x, /%e7%8b%90%e7%8b%b8.svg 2x" sizes="auto" data-title="waka&#39;s blog" data-alt="waka&#39;s blog" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">waka&#39;s blog</span></a><span id="typeit-header-subtitle-desktop" class="typeit header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/friends/"
+                
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="waka&#39;s blog"><img loading="lazy" src="/%e7%8b%90%e7%8b%b8.svg" srcset="/%e7%8b%90%e7%8b%b8.svg, /%e7%8b%90%e7%8b%b8.svg 1.5x, /%e7%8b%90%e7%8b%b8.svg 2x" sizes="auto" data-title="/狐狸.svg" data-alt="/狐狸.svg" class="logo" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/><span class="header-title-text">waka&#39;s blog</span></a><span id="typeit-header-subtitle-mobile" class="typeit header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/friends/"
+                  
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <span>使用springboot整合OpenAI的Chatgpt api和Whisper api</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><img loading="lazy" src="/images/avatar.jpg" srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x" sizes="auto" data-title="waka" data-alt="waka" class="avatar" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/>&nbsp;waka</span></span>
+          <span class="post-category">收录于 <a href="/categories/java/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> java</a></span></div>
+      <div class="post-meta-line"><span title=2023-03-13&#32;22:41:46><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-03-13">2023-03-13</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 2398 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 5 分钟</span>&nbsp;<span id="/springboot-openai/" class="comment-visitors" data-flag-title="使用springboot整合OpenAI的Chatgpt api和Whisper api">
+              <i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="twikoo_visitors">-</span>&nbsp;次阅读
+            </span>&nbsp;<span id="/springboot-openai/" class="comment-count" data-flag-title="使用springboot整合OpenAI的Chatgpt api和Whisper api">
+              <i class="fa-regular fa-comments fa-fw" aria-hidden="true"></i>&nbsp;<span id="twikoo-comment-count">-</span>&nbsp;条评论
+            </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#openai-api">OpenAI API</a></li>
+    <li><a href="#集成chatgpt-whisper-spring-boot">集成chatgpt-whisper-spring-boot</a></li>
+    <li><a href="#spring-cloud-openfeign">Spring Cloud OpenFeign</a></li>
+    <li><a href="#feign-client">Feign Client</a></li>
+    <li><a href="#models">Models</a></li>
+    <li><a href="#service">Service</a></li>
+    <li><a href="#rest-controller-rest">REST Controller REST</a></li>
+    <li><a href="#authentication-认证">Authentication 认证</a></li>
+    <li><a href="#最后运行项目">最后运行项目</a></li>
+    <li><a href="#使用whisper-api进行音频翻译">使用Whisper API进行音频翻译</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="springbootchatgptwhisper-api">Springboot+Chatgpt+Whisper api</h1>
+<p><img loading="lazy" src="https://www.qbitai.com/wp-content/uploads/2020/02/openai-cover-e1582087905568.png" srcset="https://www.qbitai.com/wp-content/uploads/2020/02/openai-cover-e1582087905568.png, https://www.qbitai.com/wp-content/uploads/2020/02/openai-cover-e1582087905568.png 1.5x, https://www.qbitai.com/wp-content/uploads/2020/02/openai-cover-e1582087905568.png 2x" sizes="auto" data-title="https://www.qbitai.com/wp-content/uploads/2020/02/openai-cover-e1582087905568.png" data-alt="https://www.qbitai.com/wp-content/uploads/2020/02/openai-cover-e1582087905568.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>本文通过springboot将两个OpenAI API的其中两个，ChatGPT和Whisper API集成在一起，方便后续的开发。</p>
+<h2 id="openai-api">OpenAI API</h2>
+<p>OpenAI是人工智能和机器学习工具及API的领先提供商之一。它训练了尖端的语言模型，擅长理解和生成文本。OpenAI API提供对这些模型的访问，并可用于解决几乎涉及处理语言的任何任务。它可以执行包括但不限于以下任务：</p>
+<ul>
+<li>
+<p>Content generation 内容生成</p>
+</li>
+<li>
+<p>Summarization 总结</p>
+</li>
+<li>
+<p>Classification, categorization, and sentiment analysis<br>
+分类、归类和情感分析</p>
+</li>
+<li>
+<p>Data extraction 数据提取</p>
+</li>
+<li>
+<p>Translation 翻译</p>
+</li>
+<li>
+<p>Transcription 转录</p>
+</li>
+<li>
+<p>Image generation 图像生成</p>
+</li>
+</ul>
+<p>我们可以通过任何语言发出HTTP请求与API进行交互。在本篇文章中，我们将使用Java构建一个Spring Boot微服务来集成Chatgpt API和Whisper API语音转文字功能。</p>
+<h2 id="集成chatgpt-whisper-spring-boot">集成chatgpt-whisper-spring-boot</h2>
+<ol>
+<li>
+<p>首先我们打开IDEA新建一个springboot项目</p>
+<p><img loading="lazy" src="https://thumbsnap.com/i/3Y6zzgX5.png" srcset="https://thumbsnap.com/i/3Y6zzgX5.png, https://thumbsnap.com/i/3Y6zzgX5.png 1.5x, https://thumbsnap.com/i/3Y6zzgX5.png 2x" sizes="auto" data-title="https://thumbsnap.com/i/3Y6zzgX5.png" data-alt="https://thumbsnap.com/i/3Y6zzgX5.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+</li>
+<li>
+<p>然后往其中的pom.xml文件添加依赖</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">web</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">cloud</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">openfeign</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">4.0.1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">projectlombok</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">lombok</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">optional</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;/</span><span class="n">optional</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">configuration</span><span class="o">-</span><span class="n">processor</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">optional</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;/</span><span class="n">optional</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="spring-cloud-openfeign">Spring Cloud OpenFeign</h2>
+<p>对于第三方REST API集成，有许多可以用的工具，这里我们选择Spring Cloud OpenFeign，因为这个对于Spring Boot 3支持方面比较好。</p>
+<p>接下来我们打开 <code>application.yml</code>，往其中添加下面的内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">openai</span><span class="o">-</span><span class="n">service</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">api</span><span class="o">-</span><span class="n">key</span><span class="o">:</span> <span class="n">xxxxxxxxxx</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gpt</span><span class="o">-</span><span class="n">model</span><span class="o">:</span> <span class="n">gpt</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="n">turbo</span>
+</span></span><span class="line"><span class="cl">  <span class="n">audio</span><span class="o">-</span><span class="n">model</span><span class="o">:</span> <span class="n">whisper</span><span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">  <span class="n">http</span><span class="o">-</span><span class="n">client</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">read</span><span class="o">-</span><span class="n">timeout</span><span class="o">:</span> <span class="mi">60000</span>
+</span></span><span class="line"><span class="cl">    <span class="n">connect</span><span class="o">-</span><span class="n">timeout</span><span class="o">:</span> <span class="mi">60000</span>
+</span></span><span class="line"><span class="cl">  <span class="n">urls</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base</span><span class="o">-</span><span class="n">url</span><span class="o">:</span> <span class="n">https</span><span class="o">:</span><span class="c1">//chat.579878700.xyz/v1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">chat</span><span class="o">-</span><span class="n">url</span><span class="o">:</span> <span class="o">/</span><span class="n">chat</span><span class="o">/</span><span class="n">completions</span>
+</span></span><span class="line"><span class="cl">    <span class="n">create</span><span class="o">-</span><span class="n">transcription</span><span class="o">-</span><span class="n">url</span><span class="o">:</span> <span class="o">/</span><span class="n">audio</span><span class="o">/</span><span class="n">transcriptions</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
+<p><code>gpt-model</code> ： <code>gpt-3.5-turbo</code> ，功能最强大的GPT-3.5模型，针对聊天进行了优化，成本仅为 <code>text-davinci-003</code> 的1/10，它可以执行任何语言任务，质量更好，输出更长，指令一致。</p>
+<p><code>audio-model</code> ： <code>whisper-1</code> ，通用语音识别模型。它是在一个大型的多样化音频数据集上进行训练的，也是一个多任务模型，可以执行多语言语音识别以及语音翻译和来自世界各地大约100种不同语言的音频文件的语言识别。</p>
+<p><code> read-time</code>和<code> connect-time</code>可以根据实际需求更改，这里我使用中文来回答，因此我设置的大一些，避免回答返回时间太长导致超时问题。</p>
+<p><code> base-url</code>这里我填写的是我使用CF进行反代的地址，因为一些原因，openai api在中国不能直接访问，所以使用这个方法。如果不需要，请改成<code> https://api.openai.com/v1</code></p>
+<p><code>urls</code> ：根据OpenAI API文档，所有API URL均以 <code>[https://api.openai.com/v1](https://api.openai.com/v1)</code> 开头。我们将其定义为 <code>base-url</code> 。对于聊天功能， <code>chat-url</code> 被定义为 <code>/chat/completions</code> 。对于音频转录， <code>create-transcription-url</code> 被定义为 <code>/audio/transcriptions</code> 。</p>
+<p>我们使用 <code>/chat/completions</code> 继续使用 <code>gpt-3.5-turbo</code> 模型。</p>
+<h2 id="feign-client">Feign Client</h2>
+<p>现在配置已经完成，让我们继续编写声明式Feign客户端，我们需要两个方法： <code>chat</code> 和 <code>createTranscription</code> ，调用它们各自的OpenAI API端点URL。你可以随意命名这些方法，为了简单起见，让我们继续使用 <code>chat</code> 和 <code>createTranscription</code> 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@FeignClient</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;openai-service&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;${openai-service.urls.base-url}&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">configuration</span> <span class="o">=</span> <span class="n">OpenAIClientConfig</span><span class="o">.</span><span class="na">class</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OpenAIClient</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;${openai-service.urls.chat-url}&#34;</span><span class="o">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Content-Type=application/json&#34;</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ChatGPTResponse</span> <span class="nf">chat</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">ChatGPTRequest</span> <span class="n">chatGPTRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;${openai-service.urls.create-transcription-url}&#34;</span><span class="o">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Content-Type=multipart/form-data&#34;</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WhisperTranscriptionResponse</span> <span class="nf">createTranscription</span><span class="o">(</span><span class="nd">@ModelAttribute</span> <span class="n">WhisperTranscriptionRequest</span> <span class="n">whisperTranscriptionRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="models">Models</h2>
+<p>通过严格遵循API文档，我们先定义请求/响应类。请参见下面使用 <code>gpt-3.5-turbo</code> 模型的示例请求和响应类。注意，使用 <code>text-davinci-003</code> 完成的请求/响应略有不同，有关详细信息，请参阅API文档。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Builder</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@AllArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@NoArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatGPTRequest</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">model</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatGPTResponse</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">object</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">model</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">created</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Choice</span><span class="o">&gt;</span> <span class="n">choices</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Usage</span> <span class="n">usage</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>使用 Whisper 模型的音频转录请求/响应示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Builder</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@AllArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@NoArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TranscriptionRequest</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">MultipartFile</span> <span class="n">file</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WhisperTranscriptionResponse</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">text</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="service">Service</h2>
+<p>下面是服务层类 <code>OpenAIClientService</code> ，构造模型并调用Feignclient以触发对OpenAI API的调用。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RequiredArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenAIClientService</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">OpenAIClient</span> <span class="n">openAIClient</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">OpenAIClientConfig</span> <span class="n">openAIClientConfig</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">ROLE_USER</span> <span class="o">=</span> <span class="s">&#34;user&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ChatGPTResponse</span> <span class="nf">chat</span><span class="o">(</span><span class="n">ChatRequest</span> <span class="n">chatRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">role</span><span class="o">(</span><span class="n">ROLE_USER</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">chatRequest</span><span class="o">.</span><span class="na">getQuestion</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ChatGPTRequest</span> <span class="n">chatGPTRequest</span> <span class="o">=</span> <span class="n">ChatGPTRequest</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">model</span><span class="o">(</span><span class="n">openAIClientConfig</span><span class="o">.</span><span class="na">getModel</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">messages</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singletonList</span><span class="o">(</span><span class="n">message</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClient</span><span class="o">.</span><span class="na">chat</span><span class="o">(</span><span class="n">chatGPTRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">WhisperTranscriptionResponse</span> <span class="nf">createTranscription</span><span class="o">(</span><span class="n">TranscriptionRequest</span> <span class="n">transcriptionRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">WhisperTranscriptionRequest</span> <span class="n">whisperTranscriptionRequest</span> <span class="o">=</span> <span class="n">WhisperTranscriptionRequest</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">model</span><span class="o">(</span><span class="n">openAIClientConfig</span><span class="o">.</span><span class="na">getAudioModel</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">file</span><span class="o">(</span><span class="n">transcriptionRequest</span><span class="o">.</span><span class="na">getFile</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClient</span><span class="o">.</span><span class="na">createTranscription</span><span class="o">(</span><span class="n">whisperTranscriptionRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请注意，除了必需参数之外，我们还可以在请求正文中传递多个可选参数来指示 OpenAI API。例如，对于<code>/chat/completions</code>，我们可以传入<code>temperature</code>参数，它告诉 OpenAI API 使用什么采样温度，介于 0 和 2 之间。较高的值将使输出更具随机性和风险性，而较低的值会使它更集中和确定性。<code>temperature</code>如果我们不指定，默认值为 1。请参阅<a href="https://platform.openai.com/docs/api-reference"target="_blank" rel="external nofollow noopener noreferrer">OpenAI API 文档，<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>了解我们可以在请求正文中传递的所有可能的参数。</p>
+<h2 id="rest-controller-rest">REST Controller REST</h2>
+<p>最后，让我们看看REST Controller层的 <code>OpenAIClientController</code> ，里面的两个客户端：</p>
+<ul>
+<li>
+<p><code>chat</code> （ <code>/api/v1/chat</code> ）：POST调用，使用JSON格式的消息，接受一个问题，并输出响应内容。</p>
+</li>
+<li>
+<p><code>createTranscription</code> （ <code>/api/v1/transcription</code> ）：POST调用，使用multipart/form-data，因为我们要上传音频文件，如 <code>m4a</code>和<code> mp3</code>等音频文件 ，API将把音频文件转录为文本。</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RestController</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RequiredArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/api/v1&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenAIClientController</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">OpenAIClientService</span> <span class="n">openAIClientService</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/chat&#34;</span><span class="o">,</span> <span class="n">consumes</span> <span class="o">=</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ChatGPTResponse</span> <span class="nf">chat</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">ChatRequest</span> <span class="n">chatRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClientService</span><span class="o">.</span><span class="na">chat</span><span class="o">(</span><span class="n">chatRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/transcription&#34;</span><span class="o">,</span> <span class="n">consumes</span> <span class="o">=</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">MULTIPART_FORM_DATA_VALUE</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">WhisperTranscriptionResponse</span> <span class="nf">createTranscription</span><span class="o">(</span><span class="nd">@ModelAttribute</span> <span class="n">TranscriptionRequest</span> <span class="n">transcriptionRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClientService</span><span class="o">.</span><span class="na">createTranscription</span><span class="o">(</span><span class="n">transcriptionRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="authentication-认证">Authentication 认证</h2>
+<p>OpenAI API调用需要传入一个带有API密钥的请求头“ <code>Authorization</code> “。让我们声明一个 <code>RequestInterceptor </code>bean来处理它，参见 <code>OpenAIClientConfig </code>类的示例代码片段：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">RequestInterceptor</span> <span class="nf">apiKeyInterceptor</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">request</span> <span class="o">-&gt;</span> <span class="n">request</span><span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">&#34;Authorization&#34;</span><span class="o">,</span> <span class="s">&#34;Bearer &#34;</span> <span class="o">+</span> <span class="n">apiKey</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="最后运行项目">最后运行项目</h2>
+<p>用Postman测试一下</p>
+<p>下面是 <code>/chat</code> 客户端的示例请求/响应截图：</p>
+<p><img loading="lazy" src="https://thumbsnap.com/i/vymQU5KY.png" srcset="https://thumbsnap.com/i/vymQU5KY.png, https://thumbsnap.com/i/vymQU5KY.png 1.5x, https://thumbsnap.com/i/vymQU5KY.png 2x" sizes="auto" data-title="https://thumbsnap.com/i/vymQU5KY.png" data-alt="https://thumbsnap.com/i/vymQU5KY.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>下面是 <code>/transcription</code> 的请求/响应：</p>
+<p><img loading="lazy" src="https://thumbsnap.com/i/NbWLi3MG.png" srcset="https://thumbsnap.com/i/NbWLi3MG.png, https://thumbsnap.com/i/NbWLi3MG.png 1.5x, https://thumbsnap.com/i/NbWLi3MG.png 2x" sizes="auto" data-title="https://thumbsnap.com/i/NbWLi3MG.png" data-alt="https://thumbsnap.com/i/NbWLi3MG.png" style="background: url(/svg/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;this.alt=this.dataset.alt;for(const a of ['style','data-title','data-alt','onerror','onload']){this.removeAttribute(a);}"/></p>
+<p>感觉对中文的识别准确度还是可以的。</p>
+<p>使用Whisper模型的音频转录或翻译，文件上传目前限制为25 MB，并支持以下输入文件类型：<code>mp3</code>, <code>mp4</code>, <code>mpeg</code>, <code>mpga</code>, <code>m4a</code>, <code>wav</code>, <code>webm</code></p>
+<p>Whisper型号的定价目前设定为0.006美元/分钟。</p>
+<h2 id="使用whisper-api进行音频翻译">使用Whisper API进行音频翻译</h2>
+<p>除了音频转录，Whisper API还提供音频翻译端点 <code>/audio/translations</code> 。我也测试了这个特性。然而，我发现，尽管它说可以把音频翻译成英语，但我录了一个中文短语，并在应用程序中调用了 <code>/audio/translations</code> api，结果发现回应仍然是中文。我也用日语测试了这个api，它完整的翻译成了英语。这应该是一个bug。</p>
+<h2 id="总结">总结</h2>
+<p>与任何第三方REST API一样，将OpenAI API集成到Springboot中非常简单。</p>
+<p>因此使用api开发自己的人工智能程序会变的非常便捷。</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-03-13&#32;22:41:46>更新于 2023-03-13&nbsp;</span>
+      </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="/springboot-openai/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://blog.579878700.xyz/springboot-openai/" data-title="使用springboot整合OpenAI的Chatgpt api和Whisper api" data-hashtags="springboot,openai"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://blog.579878700.xyz/springboot-openai/" data-hashtag="springboot"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://blog.579878700.xyz/springboot-openai/" data-title="使用springboot整合OpenAI的Chatgpt api和Whisper api"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/springboot/' class="post-tag">springboot</a><a href='/tags/openai/' class="post-tag">openai</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/ssi_book/" class="post-nav-item" rel="prev" title="《Self-Sovereign Identity》(《身份自主权》中英文书籍)"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>《Self-Sovereign Identity》(《身份自主权》中英文书籍)</a>
+      <a href="/orderbook/" class="post-nav-item" rel="next" title="OrderBook的实现思路">OrderBook的实现思路<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="twikoo"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://twikoo.js.org/" rel="external nofollow noopener noreferrer">Twikoo</a>.
+      </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.111.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.2.18-RC"><img class="fixit-icon" src="/fixit.min.svg" alt="FixIt logo" />&nbsp;FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">
+              <a href="/">waka</a></span></div><div class="footer-line statistics"></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/twikoo/twikoo.all.min.js" defer></script><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":true,"expired":false,"twikoo":{"commentCount":true,"el":"#twikoo","envId":"https://twikoo.579878700.xyz/","lang":"zh-cn"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-header-subtitle-desktop":["typeit-header-subtitle-desktop"],"typeit-header-subtitle-mobile":["typeit-header-subtitle-mobile"]},"duration":6,"speed":100}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

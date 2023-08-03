@@ -5,10 +5,10 @@
     <description>openai - 标签 - waka&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 13 Mar 2023 22:41:46 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/tags/openai/" rel="self" type="application/rss+xml" /><item>
   <title>使用springboot整合OpenAI的Chatgpt api和Whisper api</title>
-  <link>http://blog.579878700.xyz/posts/springboot-openai/</link>
+  <link>http://blog.579878700.xyz/springboot-openai/</link>
   <pubDate>Mon, 13 Mar 2023 22:41:46 &#43;0800</pubDate>
   <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
-  <guid>http://blog.579878700.xyz/posts/springboot-openai/</guid>
+  <guid>http://blog.579878700.xyz/springboot-openai/</guid>
   <description><![CDATA[<h1 id="springbootchatgptwhisper-api">Springboot+Chatgpt+Whisper api</h1>
 <p></p>
 <p>本文通过springboot将两个OpenAI API的其中两个，ChatGPT和Whisper API集成在一起，方便后续的开发。</p>
@@ -47,48 +47,48 @@
 </li>
 <li>
 <p>然后往其中的pom.xml文件添加依赖</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">19
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">springframework</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">spring</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">starter</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">web</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">springframework</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">cloud</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">spring</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">cloud</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">starter</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">openfeign</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">version</span><span style="color:#56b6c2">&gt;</span><span style="color:#d19a66">4.0.1</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">version</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">projectlombok</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">lombok</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span><span style="color:#e5c07b">true</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">org</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">springframework</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">groupId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span><span style="color:#e06c75">spring</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">boot</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">configuration</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">processor</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">artifactId</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span><span style="color:#e5c07b">true</span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">optional</span><span style="color:#56b6c2">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">&lt;/</span><span style="color:#e06c75">dependency</span><span style="color:#56b6c2">&gt;</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">web</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">cloud</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">starter</span><span class="o">-</span><span class="n">openfeign</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">4.0.1</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">projectlombok</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">lombok</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">optional</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;/</span><span class="n">optional</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">boot</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">spring</span><span class="o">-</span><span class="n">boot</span><span class="o">-</span><span class="n">configuration</span><span class="o">-</span><span class="n">processor</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">&lt;</span><span class="n">optional</span><span class="o">&gt;</span><span class="kc">true</span><span class="o">&lt;/</span><span class="n">optional</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -96,32 +96,32 @@
 <h2 id="spring-cloud-openfeign">Spring Cloud OpenFeign</h2>
 <p>对于第三方REST API集成，有许多可以用的工具，这里我们选择Spring Cloud OpenFeign，因为这个对于Spring Boot 3支持方面比较好。</p>
 <p>接下来我们打开 <code>application.yml</code>，往其中添加下面的内容：</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#e06c75">openai</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">service</span><span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">api</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">key</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">xxxxxxxxxx</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">gpt</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">gpt</span><span style="color:#56b6c2">-</span><span style="color:#d19a66">3.5</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">turbo</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">audio</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">whisper</span><span style="color:#56b6c2">-</span><span style="color:#d19a66">1</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">http</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">client</span><span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">read</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">timeout</span><span style="color:#56b6c2">:</span> <span style="color:#d19a66">60000</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">connect</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">timeout</span><span style="color:#56b6c2">:</span> <span style="color:#d19a66">60000</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#e06c75">urls</span><span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">base</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">url</span><span style="color:#56b6c2">:</span> <span style="color:#e06c75">https</span><span style="color:#56b6c2">:</span><span style="color:#7f848e">//chat.579878700.xyz/v1
-</span></span></span><span style="display:flex;"><span><span style="color:#7f848e"></span>    <span style="color:#e06c75">chat</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">url</span><span style="color:#56b6c2">:</span> <span style="color:#56b6c2">/</span><span style="color:#e06c75">chat</span><span style="color:#56b6c2">/</span><span style="color:#e06c75">completions</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">create</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">transcription</span><span style="color:#56b6c2">-</span><span style="color:#e06c75">url</span><span style="color:#56b6c2">:</span> <span style="color:#56b6c2">/</span><span style="color:#e06c75">audio</span><span style="color:#56b6c2">/</span><span style="color:#e06c75">transcriptions</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">openai</span><span class="o">-</span><span class="n">service</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="n">api</span><span class="o">-</span><span class="n">key</span><span class="o">:</span> <span class="n">xxxxxxxxxx</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gpt</span><span class="o">-</span><span class="n">model</span><span class="o">:</span> <span class="n">gpt</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="n">turbo</span>
+</span></span><span class="line"><span class="cl">  <span class="n">audio</span><span class="o">-</span><span class="n">model</span><span class="o">:</span> <span class="n">whisper</span><span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">  <span class="n">http</span><span class="o">-</span><span class="n">client</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">read</span><span class="o">-</span><span class="n">timeout</span><span class="o">:</span> <span class="mi">60000</span>
+</span></span><span class="line"><span class="cl">    <span class="n">connect</span><span class="o">-</span><span class="n">timeout</span><span class="o">:</span> <span class="mi">60000</span>
+</span></span><span class="line"><span class="cl">  <span class="n">urls</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base</span><span class="o">-</span><span class="n">url</span><span class="o">:</span> <span class="n">https</span><span class="o">:</span><span class="c1">//chat.579878700.xyz/v1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">chat</span><span class="o">-</span><span class="n">url</span><span class="o">:</span> <span class="o">/</span><span class="n">chat</span><span class="o">/</span><span class="n">completions</span>
+</span></span><span class="line"><span class="cl">    <span class="n">create</span><span class="o">-</span><span class="n">transcription</span><span class="o">-</span><span class="n">url</span><span class="o">:</span> <span class="o">/</span><span class="n">audio</span><span class="o">/</span><span class="n">transcriptions</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>其中 <code> api-key</code>请填写自己的api key，如果您还没有API密钥，请到<a href="https://platform.openai.com/account/api-keys"target="_blank" rel="external nofollow noopener noreferrer">https://platform.openai.com/account/api-keys<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 以生成API密钥。实际开发中这种配置肯定要放在配置中心里面，但是我们今天先简单的写个demo。</p>
@@ -133,183 +133,183 @@
 <p>我们使用 <code>/chat/completions</code> 继续使用 <code>gpt-3.5-turbo</code> 模型。</p>
 <h2 id="feign-client">Feign Client</h2>
 <p>现在配置已经完成，让我们继续编写声明式Feign客户端，我们需要两个方法： <code>chat</code> 和 <code>createTranscription</code> ，调用它们各自的OpenAI API端点URL。你可以随意命名这些方法，为了简单起见，让我们继续使用 <code>chat</code> 和 <code>createTranscription</code> 。</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@FeignClient</span><span style="color:#56b6c2">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">name</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;openai-service&#34;</span><span style="color:#56b6c2">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">url</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;${openai-service.urls.base-url}&#34;</span><span style="color:#56b6c2">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">configuration</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">OpenAIClientConfig</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">class</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">interface</span> <span style="color:#e5c07b">OpenAIClient</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;${openai-service.urls.chat-url}&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">headers</span> <span style="color:#56b6c2">=</span> <span style="color:#56b6c2">{</span><span style="color:#98c379">&#34;Content-Type=application/json&#34;</span><span style="color:#56b6c2">})</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">ChatGPTResponse</span> <span style="color:#61afef;font-weight:bold">chat</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@RequestBody</span> <span style="color:#e06c75">ChatGPTRequest</span> <span style="color:#e06c75">chatGPTRequest</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;${openai-service.urls.create-transcription-url}&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">headers</span> <span style="color:#56b6c2">=</span> <span style="color:#56b6c2">{</span><span style="color:#98c379">&#34;Content-Type=multipart/form-data&#34;</span><span style="color:#56b6c2">})</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#e06c75">WhisperTranscriptionResponse</span> <span style="color:#61afef;font-weight:bold">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@ModelAttribute</span> <span style="color:#e06c75">WhisperTranscriptionRequest</span> <span style="color:#e06c75">whisperTranscriptionRequest</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@FeignClient</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;openai-service&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;${openai-service.urls.base-url}&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">configuration</span> <span class="o">=</span> <span class="n">OpenAIClientConfig</span><span class="o">.</span><span class="na">class</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OpenAIClient</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;${openai-service.urls.chat-url}&#34;</span><span class="o">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Content-Type=application/json&#34;</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ChatGPTResponse</span> <span class="nf">chat</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">ChatGPTRequest</span> <span class="n">chatGPTRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;${openai-service.urls.create-transcription-url}&#34;</span><span class="o">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Content-Type=multipart/form-data&#34;</span><span class="o">})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WhisperTranscriptionResponse</span> <span class="nf">createTranscription</span><span class="o">(</span><span class="nd">@ModelAttribute</span> <span class="n">WhisperTranscriptionRequest</span> <span class="n">whisperTranscriptionRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="models">Models</h2>
 <p>通过严格遵循API文档，我们先定义请求/响应类。请参见下面使用 <code>gpt-3.5-turbo</code> 模型的示例请求和响应类。注意，使用 <code>text-davinci-003</code> 完成的请求/响应略有不同，有关详细信息，请参阅API文档。</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">8
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@Builder</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@AllArgsConstructor</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@NoArgsConstructor</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">ChatGPTRequest</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">model</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">List</span><span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">Message</span><span style="color:#56b6c2">&gt;</span> <span style="color:#e06c75">messages</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Builder</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@AllArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@NoArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatGPTRequest</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">model</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">9
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">ChatGPTResponse</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">id</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">object</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">model</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">LocalDate</span> <span style="color:#e06c75">created</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">List</span><span style="color:#56b6c2">&lt;</span><span style="color:#e06c75">Choice</span><span style="color:#56b6c2">&gt;</span> <span style="color:#e06c75">choices</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">Usage</span> <span style="color:#e06c75">usage</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatGPTResponse</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">id</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">object</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">model</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">LocalDate</span> <span class="n">created</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Choice</span><span class="o">&gt;</span> <span class="n">choices</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">Usage</span> <span class="n">usage</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>使用 Whisper 模型的音频转录请求/响应示例：</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">7
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@Builder</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@AllArgsConstructor</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@NoArgsConstructor</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">TranscriptionRequest</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">MultipartFile</span> <span style="color:#e06c75">file</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@Builder</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@AllArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@NoArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TranscriptionRequest</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">MultipartFile</span> <span class="n">file</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Data</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">WhisperTranscriptionResponse</span> <span style="color:#c678dd">implements</span> <span style="color:#e06c75">Serializable</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">text</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Data</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WhisperTranscriptionResponse</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">text</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="service">Service</h2>
 <p>下面是服务层类 <code>OpenAIClientService</code> ，构造模型并调用Feignclient以触发对OpenAI API的调用。</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">29
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@RequiredArgsConstructor</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">OpenAIClientService</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#e06c75">OpenAIClient</span> <span style="color:#e06c75">openAIClient</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#e06c75">OpenAIClientConfig</span> <span style="color:#e06c75">openAIClientConfig</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#c678dd">static</span> <span style="color:#e06c75">String</span> <span style="color:#e06c75">ROLE_USER</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;user&#34;</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">ChatGPTResponse</span> <span style="color:#61afef;font-weight:bold">chat</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">ChatRequest</span> <span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">){</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">Message</span> <span style="color:#e06c75">message</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">Message</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">builder</span><span style="color:#56b6c2">()</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">role</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">ROLE_USER</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">content</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getQuestion</span><span style="color:#56b6c2">())</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">build</span><span style="color:#56b6c2">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">ChatGPTRequest</span> <span style="color:#e06c75">chatGPTRequest</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">ChatGPTRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">builder</span><span style="color:#56b6c2">()</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">openAIClientConfig</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getModel</span><span style="color:#56b6c2">())</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">messages</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">Collections</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">singletonList</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">message</span><span style="color:#56b6c2">))</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">build</span><span style="color:#56b6c2">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClient</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">chat</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">chatGPTRequest</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">WhisperTranscriptionResponse</span> <span style="color:#61afef;font-weight:bold">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">TranscriptionRequest</span> <span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">){</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#e06c75">WhisperTranscriptionRequest</span> <span style="color:#e06c75">whisperTranscriptionRequest</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">WhisperTranscriptionRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">builder</span><span style="color:#56b6c2">()</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">model</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">openAIClientConfig</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getAudioModel</span><span style="color:#56b6c2">())</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">file</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">getFile</span><span style="color:#56b6c2">())</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#56b6c2">.</span><span style="color:#e06c75">build</span><span style="color:#56b6c2">();</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClient</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">whisperTranscriptionRequest</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RequiredArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenAIClientService</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">OpenAIClient</span> <span class="n">openAIClient</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">OpenAIClientConfig</span> <span class="n">openAIClientConfig</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">ROLE_USER</span> <span class="o">=</span> <span class="s">&#34;user&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ChatGPTResponse</span> <span class="nf">chat</span><span class="o">(</span><span class="n">ChatRequest</span> <span class="n">chatRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">role</span><span class="o">(</span><span class="n">ROLE_USER</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">content</span><span class="o">(</span><span class="n">chatRequest</span><span class="o">.</span><span class="na">getQuestion</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ChatGPTRequest</span> <span class="n">chatGPTRequest</span> <span class="o">=</span> <span class="n">ChatGPTRequest</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">model</span><span class="o">(</span><span class="n">openAIClientConfig</span><span class="o">.</span><span class="na">getModel</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">messages</span><span class="o">(</span><span class="n">Collections</span><span class="o">.</span><span class="na">singletonList</span><span class="o">(</span><span class="n">message</span><span class="o">))</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClient</span><span class="o">.</span><span class="na">chat</span><span class="o">(</span><span class="n">chatGPTRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">WhisperTranscriptionResponse</span> <span class="nf">createTranscription</span><span class="o">(</span><span class="n">TranscriptionRequest</span> <span class="n">transcriptionRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">WhisperTranscriptionRequest</span> <span class="n">whisperTranscriptionRequest</span> <span class="o">=</span> <span class="n">WhisperTranscriptionRequest</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">model</span><span class="o">(</span><span class="n">openAIClientConfig</span><span class="o">.</span><span class="na">getAudioModel</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">file</span><span class="o">(</span><span class="n">transcriptionRequest</span><span class="o">.</span><span class="na">getFile</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClient</span><span class="o">.</span><span class="na">createTranscription</span><span class="o">(</span><span class="n">whisperTranscriptionRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>请注意，除了必需参数之外，我们还可以在请求正文中传递多个可选参数来指示 OpenAI API。例如，对于<code>/chat/completions</code>，我们可以传入<code>temperature</code>参数，它告诉 OpenAI API 使用什么采样温度，介于 0 和 2 之间。较高的值将使输出更具随机性和风险性，而较低的值会使它更集中和确定性。<code>temperature</code>如果我们不指定，默认值为 1。请参阅<a href="https://platform.openai.com/docs/api-reference"target="_blank" rel="external nofollow noopener noreferrer">OpenAI API 文档，<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a>了解我们可以在请求正文中传递的所有可能的参数。</p>
@@ -323,60 +323,60 @@
 <p><code>createTranscription</code> （ <code>/api/v1/transcription</code> ）：POST调用，使用multipart/form-data，因为我们要上传音频文件，如 <code>m4a</code>和<code> mp3</code>等音频文件 ，API将把音频文件转录为文本。</p>
 </li>
 </ul>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">17
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@RestController</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@RequiredArgsConstructor</span>
-</span></span><span style="display:flex;"><span><span style="color:#61afef">@RequestMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;/api/v1&#34;</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#c678dd">public</span> <span style="color:#c678dd">class</span> <span style="color:#e5c07b">OpenAIClientController</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">private</span> <span style="color:#c678dd">final</span> <span style="color:#e06c75">OpenAIClientService</span> <span style="color:#e06c75">openAIClientService</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;/chat&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">consumes</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">MediaType</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">APPLICATION_JSON_VALUE</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">ChatGPTResponse</span> <span style="color:#61afef;font-weight:bold">chat</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@RequestBody</span> <span style="color:#e06c75">ChatRequest</span> <span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">){</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClientService</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">chat</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">chatRequest</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#61afef">@PostMapping</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">value</span> <span style="color:#56b6c2">=</span> <span style="color:#98c379">&#34;/transcription&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#e06c75">consumes</span> <span style="color:#56b6c2">=</span> <span style="color:#e06c75">MediaType</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">MULTIPART_FORM_DATA_VALUE</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">WhisperTranscriptionResponse</span> <span style="color:#61afef;font-weight:bold">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#61afef">@ModelAttribute</span> <span style="color:#e06c75">TranscriptionRequest</span> <span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">){</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">openAIClientService</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">createTranscription</span><span style="color:#56b6c2">(</span><span style="color:#e06c75">transcriptionRequest</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@RestController</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RequiredArgsConstructor</span>
+</span></span><span class="line"><span class="cl"><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/api/v1&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OpenAIClientController</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">OpenAIClientService</span> <span class="n">openAIClientService</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/chat&#34;</span><span class="o">,</span> <span class="n">consumes</span> <span class="o">=</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">ChatGPTResponse</span> <span class="nf">chat</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="n">ChatRequest</span> <span class="n">chatRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClientService</span><span class="o">.</span><span class="na">chat</span><span class="o">(</span><span class="n">chatRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;/transcription&#34;</span><span class="o">,</span> <span class="n">consumes</span> <span class="o">=</span> <span class="n">MediaType</span><span class="o">.</span><span class="na">MULTIPART_FORM_DATA_VALUE</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">WhisperTranscriptionResponse</span> <span class="nf">createTranscription</span><span class="o">(</span><span class="nd">@ModelAttribute</span> <span class="n">TranscriptionRequest</span> <span class="n">transcriptionRequest</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">openAIClientService</span><span class="o">.</span><span class="na">createTranscription</span><span class="o">(</span><span class="n">transcriptionRequest</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="authentication-认证">Authentication 认证</h2>
 <p>OpenAI API调用需要传入一个带有API密钥的请求头“ <code>Authorization</code> “。让我们声明一个 <code>RequestInterceptor </code>bean来处理它，参见 <code>OpenAIClientConfig </code>类的示例代码片段：</p>
-<div class="highlight"><div style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#55595f">4
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#abb2bf;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#61afef">@Bean</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#c678dd">public</span> <span style="color:#e06c75">RequestInterceptor</span> <span style="color:#61afef;font-weight:bold">apiKeyInterceptor</span><span style="color:#56b6c2">()</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#c678dd">return</span> <span style="color:#e06c75">request</span> <span style="color:#56b6c2">-&gt;</span> <span style="color:#e06c75">request</span><span style="color:#56b6c2">.</span><span style="color:#e06c75">header</span><span style="color:#56b6c2">(</span><span style="color:#98c379">&#34;Authorization&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#98c379">&#34;Bearer &#34;</span> <span style="color:#56b6c2">+</span> <span style="color:#e06c75">apiKey</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">RequestInterceptor</span> <span class="nf">apiKeyInterceptor</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">request</span> <span class="o">-&gt;</span> <span class="n">request</span><span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">&#34;Authorization&#34;</span><span class="o">,</span> <span class="s">&#34;Bearer &#34;</span> <span class="o">+</span> <span class="n">apiKey</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="最后运行项目">最后运行项目</h2>

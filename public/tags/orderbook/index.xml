@@ -5,10 +5,10 @@
     <description>OrderBook - 标签 - waka&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 15 Mar 2023 23:36:31 &#43;0800</lastBuildDate><atom:link href="http://blog.579878700.xyz/tags/orderbook/" rel="self" type="application/rss+xml" /><item>
   <title>OrderBook的实现思路</title>
-  <link>http://blog.579878700.xyz/posts/orderbook/</link>
+  <link>http://blog.579878700.xyz/orderbook/</link>
   <pubDate>Wed, 15 Mar 2023 23:36:31 &#43;0800</pubDate>
   <author>map[avatar:/images/avatar.jpg email:&lt;nil&gt; link:&lt;nil&gt; name:waka]</author>
-  <guid>http://blog.579878700.xyz/posts/orderbook/</guid>
+  <guid>http://blog.579878700.xyz/orderbook/</guid>
   <description><![CDATA[<h2 id="什么是orderbook">什么是OrderBook</h2>
 <p><strong>OrderBook是一个包含了所有交易者信息的订单集合</strong>，他们想买或者想卖。<strong>想买的order叫做bid，想卖的order叫做ask</strong>，这些bid和ask的order一旦满足了各自的条件，就会尽可能快的完成配对，促成一笔交易。这里有两个种类的order需要介绍一下，它们也是最为基本的交易订单。<strong>第一种是市价 market order，买和卖都是依据当前在orderbook能寻找到的最优价格执行</strong>。<strong>第二种是限价 limit order，买和卖都是按照已经确定量和价格进行</strong>。OrderBook是传统金融中一个很重要的交易方式，通过OrderBook中显示的信息，可以判断当前市场的供需关系以及价格关系，基于以上的判断可以对市场中的下一步发生的变化进行一个判断。<strong>在去中心化金融(Defi)，刚开始发展时也借鉴到了OrderBook的模式</strong>，由于传统的OrderBook由中心化机构进行给出，导致了信息中心化不透明。所以在Defi中想实现一个OrderBook完全只有买方和卖方进行参与，而机构只收取相依的手续费即可。<br>
 看起来这样的想法是一种很不错的想法，提供了一个更加公平和自由度更高的一个市场让人们去操作。但是在实际中进行时会发现问题：</p>
