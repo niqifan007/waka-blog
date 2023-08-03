@@ -614,16 +614,16 @@ theme = "FixIt"
         darkTheme = "github-dark"
       # FixIt 0.2.13 | NEW Twikoo comment config (https://twikoo.js.org/)
       [params.page.comment.twikoo]
-        enable = false
-        envId = ""
+        enable = true
+        envId = "https://twikoo.579878700.xyz/"
         region = ""
         path = ""
         visitor = true
         commentCount = true
         # FixIt 0.2.17 | CHANGED enable lightgallery support
-        lightgallery = false
+        lightgallery = true
         # FixIt 0.2.17 | NEW enable Katex support
-        katex = false
+        katex = true
       # FixIt 0.2.14 | NEW Giscus comments config
       [params.page.comment.giscus]
         enable = false
