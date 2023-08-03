@@ -11,7 +11,7 @@ author:
 description: 使用springboot整合OpenAI的chatgpt api和whisper api
 keywords: springboot, openai, chatgpt, whisper, java
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - springboot

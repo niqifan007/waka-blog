@@ -11,7 +11,7 @@ author:
 description:
 keywords: LSTM, 机器学习, 机器学习算法, 机器学习模型
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - 机器学习

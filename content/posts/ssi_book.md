@@ -11,7 +11,7 @@ author:
 description: 这是《Self-Sovereign Identity》(《身份自主权》中英文书籍) 分享
 keywords: SSI, Self-Sovereign Identity, 身份自主权, blockchain, 区块链, DIDs, did, 书籍
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - Self-Sovereign Identity

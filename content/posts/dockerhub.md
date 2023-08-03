@@ -11,7 +11,7 @@ author:
 description: Docker Hub 镜像加速器
 keywords: Docker
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - Docker
@@ -88,7 +88,7 @@ sudo systemctl restart docker
 
 命令行执行 `docker info`，如果从结果中看到了如下内容，说明配置成功。
 
-```
+```console
 Registry Mirrors:
  [...]
  https://docker.m.daocloud.io
@@ -98,7 +98,7 @@ Registry Mirrors:
 
 使用镜像前后，可使用 `time` 统计所花费的总时间。测速前先移除本地的镜像！ 
 
-```
+```console
 $ docker rmi node:latest
 $ time docker pull node:latest
 Pulling repository node
@@ -108,10 +108,6 @@ real   1m14.078s
 user   0m0.176s
 sys    0m0.120s
 ```
-
-## 更新日志
-
----
 
 ## 参考链接
 

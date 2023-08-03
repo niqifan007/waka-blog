@@ -11,7 +11,7 @@ author:
 description:
 keywords: 零知识, zk, zero knowledge
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - 零知识

@@ -11,7 +11,7 @@ author:
 description: AI 绘画 Stable Diffusion 傻瓜包 + 模型下载分享
 keywords: AI 绘画, Stable Diffusion, 傻瓜包, 模型下载
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - Stable Diffusion

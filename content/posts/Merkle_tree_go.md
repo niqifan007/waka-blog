@@ -11,7 +11,7 @@ author:
 description: 这是一个简单的默克尔树(Merkle tree)的Go实现
 keywords: 默克尔树, Merkle tree, Go, Golang
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - Merkle tree

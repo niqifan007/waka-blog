@@ -11,7 +11,7 @@ author:
 description: 在超级账本Hyperledger Fabric中开发智能合约遇到的问题
 keywords: 超级账本, Hyperledger Fabric, 智能合约
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - 区块链

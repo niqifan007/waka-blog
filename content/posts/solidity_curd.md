@@ -11,7 +11,7 @@ author:
 description: solidity 内存(memory) 可变数组(动态数组) 的 增删改查
 keywords: solidity, 内存(memory), 可变数组(动态数组), 增删改查, 区块链
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - solidity

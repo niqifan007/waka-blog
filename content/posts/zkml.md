@@ -11,7 +11,7 @@ author:
 description: 零知识机器学习（ZKML）简介
 keywords: 零知识, 机器学习, ZKML, zk, ml
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - 区块链

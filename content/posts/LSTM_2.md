@@ -11,7 +11,7 @@ author:
 description: 了解LSTM神经网络
 keywords: LSTM, 神经网络, 机器学习
 license:
-comment: false
+comment: true
 weight: 0
 tags:
   - LSTM
